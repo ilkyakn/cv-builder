@@ -46,40 +46,20 @@ const progressText = get("progressText");
 const downloadPdfBtn = get("downloadPdfBtn");
 
 /* ================= CANLI METİN ================= */
-nameInput.oninput = () => {
-  previewName.textContent = nameInput.value || "Ad Soyad";
-  updateProgress();
-};
+function bindInput(input, preview, fallback = "-") {
+  input.oninput = () => {
+    preview.textContent = input.value || fallback;
+    updateProgress();
+  };
+}
 
-jobInput.oninput = () => {
-  previewJob.textContent = jobInput.value || "Meslek";
-  updateProgress();
-};
-
-phoneInput.oninput = () => {
-  previewPhone.textContent = phoneInput.value || "-";
-  updateProgress();
-};
-
-addressInput.oninput = () => {
-  previewAddress.textContent = addressInput.value || "-";
-  updateProgress();
-};
-
-aboutInput.oninput = () => {
-  previewAbout.textContent = aboutInput.value || "-";
-  updateProgress();
-};
-
-educationInput.oninput = () => {
-  previewEducation.textContent = educationInput.value || "-";
-  updateProgress();
-};
-
-referenceInput.oninput = () => {
-  previewReference.textContent = referenceInput.value || "-";
-  updateProgress();
-};
+bindInput(nameInput, previewName, "Ad Soyad");
+bindInput(jobInput, previewJob, "Meslek");
+bindInput(phoneInput, previewPhone);
+bindInput(addressInput, previewAddress);
+bindInput(aboutInput, previewAbout);
+bindInput(educationInput, previewEducation);
+bindInput(referenceInput, previewReference);
 
 /* ================= FOTO ================= */
 photoInput.onchange = () => {
@@ -87,9 +67,7 @@ photoInput.onchange = () => {
   if (!file) return;
 
   const reader = new FileReader();
-  reader.onload = () => {
-    previewPhoto.src = reader.result;
-  };
+  reader.onload = () => previewPhoto.src = reader.result;
   reader.readAsDataURL(file);
 };
 
@@ -124,7 +102,7 @@ toggleAbout.onchange();
 toggleEducation.onchange();
 toggleReference.onchange();
 
-/* ================= PROGRESS HESABI ================= */
+/* ================= PROGRESS ================= */
 function updateProgress() {
   let filled = 0;
   const total = 7;
@@ -152,6 +130,8 @@ function updateProgress() {
   }
 }
 
+updateProgress();
+
 /* ================= MOBİL ÖNİZLEME ================= */
 function isMobile() {
   return window.matchMedia("(max-width: 768px)").matches;
@@ -171,43 +151,35 @@ if (openPreviewBtn && closePreviewBtn) {
   };
 }
 
-/* ================= PDF ================= */
+/* ================= PDF EXPORT (KESİN & STABİL) ================= */
 downloadPdfBtn.onclick = () => {
-  downloadPdfBtn.style.display = "none";
+  const pdfWrapper = document.createElement("div");
+  pdfWrapper.style.width = "210mm";
+  pdfWrapper.style.minHeight = "297mm";
+  pdfWrapper.style.padding = "20mm";
+  pdfWrapper.style.background = "#fff";
+  pdfWrapper.style.boxSizing = "border-box";
 
-  // 🔴 1. Önce preview’u ZORLA görünür yap
-  const prevDisplay = cv.style.display;
-  cv.style.display = "block";
+  const pdfContent = document.getElementById("cv").cloneNode(true);
 
-  // 🔴 2. Mobil butonları gizle
-  const mobileEls = document.querySelectorAll(
-    ".mobile-only, #openPreviewBtn, #closePreviewBtn"
-  );
-  mobileEls.forEach(el => el.style.display = "none");
+  // ❗️ DOĞRU DEĞİŞKEN pdfContent
+  pdfContent.style.margin = "0";
+  pdfContent.style.padding = "0";
+  pdfContent.style.boxSizing = "border-box";
+  pdfContent.style.width = "100%";
+  pdfContent.style.boxShadow = "none";
+  pdfContent.style.borderRadius = "0";
+  pdfContent.style.position = "static";
+  pdfContent.style.display = "block";
 
-  // 🔴 3. CV'yi klonla
-  const clone = cv.cloneNode(true);
+  // Mobil / UI elementlerini PDF’ten çıkar
+  pdfContent.querySelectorAll(".mobile-only").forEach(el => el.remove());
 
-  // 🔴 4. PDF wrapper
-  const wrapper = document.createElement("div");
-  wrapper.style.position = "fixed";
-  wrapper.style.left = "-9999px";
-  wrapper.style.top = "0";
-  wrapper.style.width = "210mm";
-  wrapper.style.padding = "20mm";
-  wrapper.style.background = "#fff";
-  wrapper.style.boxSizing = "border-box";
-
-  clone.style.margin = "0";
-  clone.style.padding = "0";
-  clone.style.boxShadow = "none";
-  clone.style.borderRadius = "0";
-
-  wrapper.appendChild(clone);
-  document.body.appendChild(wrapper);
+  pdfWrapper.appendChild(pdfContent);
+  document.body.appendChild(pdfWrapper);
 
   html2pdf()
-    .from(wrapper)
+    .from(pdfWrapper)
     .set({
       margin: 0,
       filename: "cv.pdf",
@@ -224,11 +196,6 @@ downloadPdfBtn.onclick = () => {
     })
     .save()
     .then(() => {
-      document.body.removeChild(wrapper);
-
-      // 🔴 5. Her şeyi eski haline getir
-      cv.style.display = prevDisplay;
-      mobileEls.forEach(el => el.style.display = "");
-      downloadPdfBtn.style.display = "block";
+      document.body.removeChild(pdfWrapper);
     });
 };

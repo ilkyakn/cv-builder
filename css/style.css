@@ -21,11 +21,10 @@ html, body {
    ========================= */
 body {
   padding: 20px;
-  overflow-y: auto;
 }
 
 /* =========================
-   CONTAINER (DESKTOP)
+   CONTAINER
    ========================= */
 .container {
   display: flex;
@@ -79,9 +78,23 @@ body {
 }
 
 /* =========================
-   DOLULUK ORANI
+   PROGRESS
    ========================= */
+.progress-wrapper {
+  margin-top: 6px;
+}
+
+.progress-bg {
+  background: #e5e7eb;
+  height: 10px;
+  border-radius: 6px;
+}
+
 #progressBar {
+  height: 10px;
+  width: 0%;
+  background: #2563eb;
+  border-radius: 6px;
   transition: width 0.3s ease;
 }
 
@@ -114,7 +127,7 @@ body {
 }
 
 /* =========================
-   METİNLER
+   TEXT
    ========================= */
 .preview h1 {
   margin: 0;
@@ -144,7 +157,7 @@ body {
 }
 
 /* =========================
-   RENK TEMASI
+   COLOR THEMES
    ========================= */
 .preview h1,
 .preview h3,
@@ -167,7 +180,7 @@ body {
 }
 
 /* =========================
-   PDF BUTONU
+   PDF BUTTON
    ========================= */
 #downloadPdfBtn {
   display: block;
@@ -181,20 +194,13 @@ body {
   cursor: pointer;
 }
 
-#downloadPdfBtn:hover {
-  background: #1e4ed8;
-}
-
 /* =========================
-   MOBİL BUTONLAR
+   MOBILE
    ========================= */
 .mobile-only {
   display: none;
 }
 
-/* =========================
-   MOBİL GÖRÜNÜM
-   ========================= */
 @media (max-width: 768px) {
 
   body {
@@ -210,11 +216,9 @@ body {
     width: 100%;
   }
 
-  /* Mobilde preview ekrandan çıkar (AMA display:none DEĞİL) */
+  /* Mobilde varsayılan: sadece form */
   .preview {
-    position: absolute;
-    left: -9999px;
-    top: 0;
+    display: none;
   }
 
   .mobile-only {
@@ -229,18 +233,17 @@ body {
     border-radius: 8px;
   }
 
-  /* ÖNİZLEME MODU */
   body.preview-open .form {
     display: none;
   }
 
   body.preview-open .preview {
-    position: static;
+    display: block;
   }
 }
 
 /* =========================
-   PRINT (PDF)
+   PRINT / PDF
    ========================= */
 @media print {
 
@@ -259,8 +262,8 @@ body {
 
   .preview {
     width: 100%;
+    padding: 20mm;
     border-radius: 0;
-    position: static !important;
   }
 
   .mobile-only,

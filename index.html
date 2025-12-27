@@ -69,29 +69,24 @@
       <option value="Times New Roman">Times New Roman</option>
       <option value="Courier New">Courier New</option>
     </select>
-    
-<!-- RENK -->
-<label for="colorSelect">Renk Teması</label>
-<select id="colorSelect">
-  <option value="mono" selected>Siyah - Beyaz</option>
-  <option value="blue">Mavi</option>
-</select>
 
-<!-- CV DOLULUK DURUMU -->
-<label>CV Doluluk Durumu</label>
-<div style="margin-top:6px;">
-  <div style="background:#e5e7eb; height:10px; border-radius:6px;">
-    <div id="progressBar"
-         style="height:10px; width:0%; background:#2563eb; border-radius:6px;">
+    <!-- RENK -->
+    <label for="colorSelect">Renk Teması</label>
+    <select id="colorSelect">
+      <option value="mono" selected>Siyah - Beyaz</option>
+      <option value="blue">Mavi</option>
+    </select>
+
+    <!-- CV DOLULUK DURUMU -->
+    <label>CV Doluluk Durumu</label>
+    <div class="progress-wrapper">
+      <div class="progress-bg">
+        <div id="progressBar"></div>
+      </div>
+      <small id="progressText">CV henüz doldurulmadı</small>
     </div>
-  </div>
-  <small id="progressText"
-         style="display:block; margin-top:6px; color:#374151;">
-    CV henüz doldurulmadı
-  </small>
-</div>
 
-    <!-- 📱 MOBİL: ÖNİZLEMEYİ AÇ -->
+    <!-- MOBİL -->
     <button id="openPreviewBtn" class="mobile-only">
       Önizlemeyi Gör
     </button>
@@ -99,43 +94,33 @@
   </div>
 
   <!-- ================= SAĞ ÖNİZLEME ================= -->
-  <div class="preview modern mono" id="cv">
+  <div class="preview mono" id="cv">
 
-    <!-- 📱 MOBİL: GERİ -->
     <button id="closePreviewBtn" class="mobile-only">
       ← Düzenlemeye Dön
     </button>
 
-    <!-- HEADER -->
     <div class="header">
-      <img
-        id="previewPhoto"
-        src="assets/default-avatar.png"
-        alt="Fotoğraf"
-      >
+      <img id="previewPhoto" src="assets/default-avatar.png" alt="Fotoğraf">
       <div class="info">
         <h1 id="previewName">Ad Soyad</h1>
         <h3 id="previewJob">Meslek</h3>
       </div>
     </div>
 
-    <!-- İLETİŞİM -->
     <p><strong>Telefon:</strong> <span id="previewPhone">-</span></p>
     <p><strong>Adres:</strong> <span id="previewAddress">-</span></p>
 
-    <!-- HAKKINDA -->
     <div id="aboutSection">
       <h4>Hakkımda</h4>
       <p id="previewAbout">-</p>
     </div>
 
-    <!-- EĞİTİM -->
     <div id="educationSection">
       <h4>Eğitim</h4>
       <p id="previewEducation">-</p>
     </div>
 
-    <!-- REFERANS -->
     <div id="referenceSection">
       <h4>Referans</h4>
       <p id="previewReference">-</p>
