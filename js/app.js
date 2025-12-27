@@ -175,36 +175,45 @@ if (openPreviewBtn && closePreviewBtn) {
 downloadPdfBtn.onclick = () => {
   downloadPdfBtn.style.display = "none";
 
-  // 🔴 KRİTİK: PDF sırasında CV'yi zorla görünür yap
-  const wasPreviewOpen = document.body.classList.contains("preview-open");
-  const originalDisplay = cv.style.display;
+  // 🔴 MOBİL FIX
+  const mobileEls = document.querySelectorAll(
+    ".mobile-only, #openPreviewBtn, #closePreviewBtn"
+  );
+  mobileEls.forEach(el => el.style.display = "none");
 
-  cv.style.display = "block";
-  document.body.classList.add("preview-open");
+  const clone = cv.cloneNode(true);
+
+  const wrapper = document.createElement("div");
+  wrapper.style.position = "fixed";
+  wrapper.style.left = "-9999px";
+  wrapper.style.top = "0";
+  wrapper.style.width = "210mm";
+  wrapper.style.padding = "20mm";
+  wrapper.style.background = "#fff";
+  wrapper.style.boxSizing = "border-box";
+
+  clone.style.margin = "0";
+  clone.style.padding = "0";
+  clone.style.boxShadow = "none";
+  clone.style.borderRadius = "0";
+
+  wrapper.appendChild(clone);
+  document.body.appendChild(wrapper);
 
   html2pdf()
-    .from(cv)
+    .from(wrapper)
     .set({
-      margin: 10,
+      margin: 0,
       filename: "cv.pdf",
-      html2canvas: {
-        scale: 2,
-        useCORS: true,
-        scrollY: 0
-      },
-      jsPDF: {
-        unit: "mm",
-        format: "a4",
-        orientation: "portrait"
-      }
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
     })
     .save()
     .then(() => {
-      // 🔁 eski durumu geri al
-      cv.style.display = originalDisplay;
-      if (!wasPreviewOpen) {
-        document.body.classList.remove("preview-open");
-      }
+      document.body.removeChild(wrapper);
       downloadPdfBtn.style.display = "block";
+
+      // 🔴 MOBİL FIX – geri getir
+      mobileEls.forEach(el => el.style.display = "");
     });
 };
