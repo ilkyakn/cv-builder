@@ -27,26 +27,59 @@ const previewAbout = get("previewAbout");
 const previewEducation = get("previewEducation");
 const previewReference = get("previewReference");
 const previewPhoto = get("previewPhoto");
+
 const aboutSection = get("aboutSection");
 const educationSection = get("educationSection");
 const referenceSection = get("referenceSection");
+
 const cv = get("cv");
 
 /* ================= MOBİL BUTONLAR ================= */
 const openPreviewBtn = get("openPreviewBtn");
 const closePreviewBtn = get("closePreviewBtn");
 
+/* ================= PROGRESS ================= */
+const progressBar = get("progressBar");
+const progressText = get("progressText");
+
 /* ================= PDF ================= */
 const downloadPdfBtn = get("downloadPdfBtn");
 
 /* ================= CANLI METİN ================= */
-nameInput.oninput = () => previewName.textContent = nameInput.value || "Ad Soyad"; updateProgress();
-jobInput.oninput = () => previewJob.textContent = jobInput.value || "Meslek"; updateProgress();
-phoneInput.oninput = () => previewPhone.textContent = phoneInput.value || "-"; updateProgress();
-addressInput.oninput = () => previewAddress.textContent = addressInput.value || "-"; updateProgress();
-aboutInput.oninput = () => previewAbout.textContent = aboutInput.value || "-"; updateProgress();
-educationInput.oninput = () => previewEducation.textContent = educationInput.value || "-"; updateProgress();
-referenceInput.oninput = () => previewReference.textContent = referenceInput.value || "-"; updateProgress();
+nameInput.oninput = () => {
+  previewName.textContent = nameInput.value || "Ad Soyad";
+  updateProgress();
+};
+
+jobInput.oninput = () => {
+  previewJob.textContent = jobInput.value || "Meslek";
+  updateProgress();
+};
+
+phoneInput.oninput = () => {
+  previewPhone.textContent = phoneInput.value || "-";
+  updateProgress();
+};
+
+addressInput.oninput = () => {
+  previewAddress.textContent = addressInput.value || "-";
+  updateProgress();
+};
+
+aboutInput.oninput = () => {
+  previewAbout.textContent = aboutInput.value || "-";
+  updateProgress();
+};
+
+educationInput.oninput = () => {
+  previewEducation.textContent = educationInput.value || "-";
+  updateProgress();
+};
+
+referenceInput.oninput = () => {
+  previewReference.textContent = referenceInput.value || "-";
+  updateProgress();
+};
 
 /* ================= FOTO ================= */
 photoInput.onchange = () => {
@@ -54,7 +87,9 @@ photoInput.onchange = () => {
   if (!file) return;
 
   const reader = new FileReader();
-  reader.onload = () => previewPhoto.src = reader.result;
+  reader.onload = () => {
+    previewPhoto.src = reader.result;
+  };
   reader.readAsDataURL(file);
 };
 
@@ -78,6 +113,7 @@ colorSelect.onchange = () => {
 function syncSection(toggle, section, input) {
   section.style.display = toggle.checked ? "block" : "none";
   input.disabled = !toggle.checked;
+  updateProgress();
 }
 
 toggleAbout.onchange = () => syncSection(toggleAbout, aboutSection, aboutInput);
@@ -88,28 +124,7 @@ toggleAbout.onchange();
 toggleEducation.onchange();
 toggleReference.onchange();
 
-/* ================= MOBİL ÖNİZLEME (SADECE MOBİL) ================= */
-function isMobile() {
-  return window.matchMedia("(max-width: 768px)").matches;
-}
-
-if (openPreviewBtn && closePreviewBtn) {
-
-  openPreviewBtn.onclick = () => {
-    if (!isMobile()) return;
-    document.body.classList.add("preview-open");
-    window.scrollTo(0, 0);
-  };
-
-  closePreviewBtn.onclick = () => {
-    if (!isMobile()) return;
-    document.body.classList.remove("preview-open");
-    window.scrollTo(0, 0);
-  };
-
-}
-const progressBar = document.getElementById("progressBar");
-const progressText = document.getElementById("progressText");
+/* ================= PROGRESS HESABI ================= */
 function updateProgress() {
   let filled = 0;
   const total = 7;
@@ -137,7 +152,26 @@ function updateProgress() {
   }
 }
 
-/* ================= PDF EXPORT ================= */
+/* ================= MOBİL ÖNİZLEME ================= */
+function isMobile() {
+  return window.matchMedia("(max-width: 768px)").matches;
+}
+
+if (openPreviewBtn && closePreviewBtn) {
+  openPreviewBtn.onclick = () => {
+    if (!isMobile()) return;
+    document.body.classList.add("preview-open");
+    window.scrollTo(0, 0);
+  };
+
+  closePreviewBtn.onclick = () => {
+    if (!isMobile()) return;
+    document.body.classList.remove("preview-open");
+    window.scrollTo(0, 0);
+  };
+}
+
+/* ================= PDF ================= */
 downloadPdfBtn.onclick = () => {
   downloadPdfBtn.style.display = "none";
 
@@ -174,4 +208,5 @@ downloadPdfBtn.onclick = () => {
       downloadPdfBtn.style.display = "block";
     });
 };
+
 updateProgress();

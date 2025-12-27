@@ -17,16 +17,15 @@ html, body {
 }
 
 /* =========================
-   BODY
+   BODY (TEK SCROLL)
    ========================= */
 body {
   padding: 20px;
   overflow-y: auto;
-  overscroll-behavior-y: none;
 }
 
 /* =========================
-   CONTAINER (PC)
+   CONTAINER (DESKTOP)
    ========================= */
 .container {
   display: flex;
@@ -44,9 +43,13 @@ body {
   border-radius: 8px;
 }
 
+.form h2 {
+  margin-top: 0;
+}
+
 .form label {
   display: block;
-  margin-top: 12px;
+  margin-top: 14px;
   font-weight: bold;
 }
 
@@ -59,13 +62,31 @@ body {
   font-size: 14px;
 }
 
-.form label input[type="checkbox"] {
+.form textarea {
+  resize: vertical;
+}
+
+.form .checkbox {
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.form input[type="checkbox"] {
   width: auto;
-  margin-right: 6px;
 }
 
 /* =========================
-   PREVIEW
+   DOLULUK ORANI
+   ========================= */
+#progressBar {
+  transition: width 0.3s ease;
+}
+
+/* =========================
+   PREVIEW (DESKTOP)
    ========================= */
 .preview {
   width: 50%;
@@ -146,23 +167,6 @@ body {
 }
 
 /* =========================
-   PROGRESS BAR (GERİ GELDİ)
-   ========================= */
-#progressBar {
-  height: 10px;
-  width: 0%;
-  background: #2563eb;
-  border-radius: 6px;
-}
-
-#progressText {
-  display: block;
-  margin-top: 6px;
-  color: #374151;
-  font-size: 13px;
-}
-
-/* =========================
    PDF BUTONU
    ========================= */
 #downloadPdfBtn {
@@ -182,14 +186,14 @@ body {
 }
 
 /* =========================
-   MOBİL BUTONLAR
+   MOBİL BUTONLAR (GİZLİ)
    ========================= */
 .mobile-only {
   display: none;
 }
 
 /* =========================
-   MOBİL
+   MOBİL GÖRÜNÜM
    ========================= */
 @media (max-width: 768px) {
 
@@ -206,15 +210,17 @@ body {
     width: 100%;
   }
 
-  /* Mobilde normalde SADECE FORM */
+  /* MOBİLDE NORMALDE SADECE FORM */
   .preview {
     display: none;
+    margin-top: 0;
   }
 
+  /* MOBİL BUTONLAR AÇIK */
   .mobile-only {
     display: block;
     width: 100%;
-    margin: 20px 0;
+    margin-top: 20px;
     padding: 14px;
     font-size: 16px;
     background: #2563eb;
@@ -223,20 +229,22 @@ body {
     border-radius: 8px;
   }
 
-  /* Önizleme açıkken */
+  /* ÖNİZLEME MODU */
   body.preview-open .form {
     display: none;
   }
 
   body.preview-open .preview {
     display: block;
-    margin: 0;
-    box-shadow: none;
+  }
+
+  body.preview-open {
+    padding: 16px;
   }
 }
 
 /* =========================
-   PRINT
+   PRINT (PDF)
    ========================= */
 @media print {
   body {
@@ -255,5 +263,9 @@ body {
   .preview {
     width: 100%;
     border-radius: 0;
+  }
+
+  #downloadPdfBtn {
+    display: none;
   }
 }
