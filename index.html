@@ -12,57 +12,73 @@
 
   <!-- ================= SOL FORM ================= -->
   <div class="form">
-
-    <h2>CV Bilgileri</h2>
+    <h2 data-i18n="cvInfo">CV Bilgileri</h2>
+    <!-- DİL -->
+    <label for="languageSelect" id="languageLabel">Dil</label>
+    <select id="languageSelect">
+      <option value="tr" selected>Türkçe</option>
+      <option value="en">English</option>
+    </select>
 
     <!-- KİŞİSEL -->
-    <label for="nameInput">Ad Soyad</label>
+    <label for="nameInput" data-i18n="name">Ad Soyad</label>
     <input type="text" id="nameInput">
 
-    <label for="jobInput">Meslek</label>
+    <label for="jobInput" data-i18n="job">Meslek</label>
     <input type="text" id="jobInput">
 
-    <label for="phoneInput">Telefon</label>
+    <!-- İLETİŞİM -->
+    <label class="checkbox">
+  <input type="checkbox" id="toggleContact" checked>
+  <span data-i18n="showContact">İletişim bilgilerini göster</span>
+</label>
+
+
+    <label for="phoneInput" data-i18n="phone">Telefon</label>
     <input type="text" id="phoneInput">
 
-    <label for="addressInput">Adres</label>
+    <label for="addressInput" data-i18n="address">Adres</label>
     <input type="text" id="addressInput">
 
     <!-- HAKKINDA -->
-    <label>Hakkımda</label>
+     <h4 data-i18n="about">Hakkımda</h4>
     <label class="checkbox">
-      <input type="checkbox" id="toggleAbout" checked>
-      Hakkımda bölümünü göster
-    </label>
+  <input type="checkbox" id="toggleAbout" checked>
+  <span data-i18n="showAbout">Hakkımda bölümünü göster</span>
+</label>
+
     <textarea id="aboutInput"></textarea>
 
     <!-- EĞİTİM -->
-    <label>Eğitim</label>
+     <h4 data-i18n="education">Eğitim</h4>
+
     <label class="checkbox">
-      <input type="checkbox" id="toggleEducation" checked>
-      Eğitim bölümünü göster
-    </label>
+  <input type="checkbox" id="toggleEducation" checked>
+  <span data-i18n="showEducation">Eğitim bölümünü göster</span>
+</label>
     <textarea id="educationInput"></textarea>
 
     <!-- REFERANS -->
-    <label>Referans</label>
+     <h4 data-i18n="reference">Referans</h4>
+
     <label class="checkbox">
-      <input type="checkbox" id="toggleReference" checked>
-      Referans bölümünü göster
-    </label>
+  <input type="checkbox" id="toggleReference" checked>
+  <span data-i18n="showReference">Referans bölümünü göster</span>
+</label>
     <textarea id="referenceInput"></textarea>
 
     <!-- FOTO -->
-    <label for="photoInput">Fotoğraf</label>
+    <label for="photoInput" data-i18n="photo">Fotoğraf</label>
     <input type="file" id="photoInput" accept="image/*">
 
     <label class="checkbox">
-      <input type="checkbox" id="photoToggle" checked>
-      Fotoğrafı CV'de göster
-    </label>
+  <input type="checkbox" id="photoToggle" checked>
+  <span data-i18n="showPhoto">Fotoğrafı CV'de göster</span>
+</label>
+
 
     <!-- FONT -->
-    <label for="fontSelect">Yazı Fontu</label>
+    <label for="fontSelect" data-i18n="font">Yazı Fontu</label>
     <select id="fontSelect">
       <option value="Arial">Arial</option>
       <option value="Georgia">Georgia</option>
@@ -71,14 +87,14 @@
     </select>
 
     <!-- RENK -->
-    <label for="colorSelect">Renk Teması</label>
+    <label for="colorSelect" data-i18n="color">Renk Teması</label>
     <select id="colorSelect">
-      <option value="mono" selected>Siyah - Beyaz</option>
-      <option value="blue">Mavi</option>
+      <option value="mono" selected data-i18n="mono">Siyah - Beyaz</option>
+      <option value="blue" data-i18n="blue">Mavi</option>
     </select>
 
-    <!-- CV DOLULUK DURUMU -->
-    <label>CV Doluluk Durumu</label>
+    <!-- PROGRESS -->
+    <label data-i18n="progressTitle">CV Doluluk Durumu</label>
     <div class="progress-wrapper">
       <div class="progress-bg">
         <div id="progressBar"></div>
@@ -87,17 +103,16 @@
     </div>
 
     <!-- MOBİL -->
-    <button id="openPreviewBtn" class="mobile-only">
+    <button id="openPreviewBtn" class="mobile-only" data-i18n="openPreview">
       Önizlemeyi Gör
     </button>
-
   </div>
 
   <!-- ================= SAĞ ÖNİZLEME ================= -->
   <div class="preview mono" id="cv">
 
-    <button id="closePreviewBtn" class="mobile-only">
-      ← Düzenlemeye Dön
+    <button id="closePreviewBtn" class="mobile-only" data-i18n="closePreview">
+     ← Düzenlemeye Dön
     </button>
 
     <div class="header">
@@ -108,21 +123,24 @@
       </div>
     </div>
 
-    <p><strong>Telefon:</strong> <span id="previewPhone">-</span></p>
-    <p><strong>Adres:</strong> <span id="previewAddress">-</span></p>
+    <!-- İLETİŞİM ÖNİZLEME -->
+    <div id="contactSection">
+      <p><strong><span data-i18n="phone">Telefon</span>:</strong> <span id="previewPhone">-</span></p>
+      <p><strong><span data-i18n="address">Adres</span>:</strong> <span id="previewAddress">-</span></p>
+    </div>
 
     <div id="aboutSection">
-      <h4>Hakkımda</h4>
+      <h4 data-i18n="about">Hakkımda</h4>
       <p id="previewAbout">-</p>
     </div>
 
     <div id="educationSection">
-      <h4>Eğitim</h4>
+      <h4 data-i18n="education">Eğitim</h4>
       <p id="previewEducation">-</p>
     </div>
 
     <div id="referenceSection">
-      <h4>Referans</h4>
+      <h4 data-i18n="reference">Referans</h4>
       <p id="previewReference">-</p>
     </div>
 
@@ -131,7 +149,8 @@
 </div>
 
 <!-- PDF -->
-<button id="downloadPdfBtn">PDF olarak indir</button>
+<button id="downloadPdfBtn" data-i18n="download">PDF olarak indir</button>
+<button id="resetBtn" data-i18n="reset">Sıfırla</button>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="js/app.js"></script>
