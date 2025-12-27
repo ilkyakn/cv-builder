@@ -175,14 +175,20 @@ if (openPreviewBtn && closePreviewBtn) {
 downloadPdfBtn.onclick = () => {
   downloadPdfBtn.style.display = "none";
 
-  // 🔴 MOBİL FIX
+  // 🔴 1. Önce preview’u ZORLA görünür yap
+  const prevDisplay = cv.style.display;
+  cv.style.display = "block";
+
+  // 🔴 2. Mobil butonları gizle
   const mobileEls = document.querySelectorAll(
     ".mobile-only, #openPreviewBtn, #closePreviewBtn"
   );
   mobileEls.forEach(el => el.style.display = "none");
 
+  // 🔴 3. CV'yi klonla
   const clone = cv.cloneNode(true);
 
+  // 🔴 4. PDF wrapper
   const wrapper = document.createElement("div");
   wrapper.style.position = "fixed";
   wrapper.style.left = "-9999px";
@@ -205,15 +211,24 @@ downloadPdfBtn.onclick = () => {
     .set({
       margin: 0,
       filename: "cv.pdf",
-      html2canvas: { scale: 2, useCORS: true },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        scrollY: 0
+      },
+      jsPDF: {
+        unit: "mm",
+        format: "a4",
+        orientation: "portrait"
+      }
     })
     .save()
     .then(() => {
       document.body.removeChild(wrapper);
-      downloadPdfBtn.style.display = "block";
 
-      // 🔴 MOBİL FIX – geri getir
+      // 🔴 5. Her şeyi eski haline getir
+      cv.style.display = prevDisplay;
       mobileEls.forEach(el => el.style.display = "");
+      downloadPdfBtn.style.display = "block";
     });
 };
