@@ -40,14 +40,13 @@ const closePreviewBtn = get("closePreviewBtn");
 const downloadPdfBtn = get("downloadPdfBtn");
 
 /* ================= CANLI METİN ================= */
-nameInput.oninput = () => previewName.textContent = nameInput.value || "Ad Soyad";
-jobInput.oninput = () => previewJob.textContent = jobInput.value || "Meslek";
-phoneInput.oninput = () => previewPhone.textContent = phoneInput.value || "-";
-addressInput.oninput = () => previewAddress.textContent = addressInput.value || "-";
-
-aboutInput.oninput = () => previewAbout.textContent = aboutInput.value || "-";
-educationInput.oninput = () => previewEducation.textContent = educationInput.value || "-";
-referenceInput.oninput = () => previewReference.textContent = referenceInput.value || "-";
+nameInput.oninput = () => previewName.textContent = nameInput.value || "Ad Soyad"; updateProgress();
+jobInput.oninput = () => previewJob.textContent = jobInput.value || "Meslek"; updateProgress();
+phoneInput.oninput = () => previewPhone.textContent = phoneInput.value || "-"; updateProgress();
+addressInput.oninput = () => previewAddress.textContent = addressInput.value || "-"; updateProgress();
+aboutInput.oninput = () => previewAbout.textContent = aboutInput.value || "-"; updateProgress();
+educationInput.oninput = () => previewEducation.textContent = educationInput.value || "-"; updateProgress();
+referenceInput.oninput = () => previewReference.textContent = referenceInput.value || "-"; updateProgress();
 
 /* ================= FOTO ================= */
 photoInput.onchange = () => {
@@ -109,6 +108,34 @@ if (openPreviewBtn && closePreviewBtn) {
   };
 
 }
+const progressBar = document.getElementById("progressBar");
+const progressText = document.getElementById("progressText");
+function updateProgress() {
+  let filled = 0;
+  const total = 7;
+
+  if (nameInput.value.trim()) filled++;
+  if (jobInput.value.trim()) filled++;
+  if (phoneInput.value.trim()) filled++;
+  if (addressInput.value.trim()) filled++;
+  if (aboutInput.value.trim() && !aboutInput.disabled) filled++;
+  if (educationInput.value.trim() && !educationInput.disabled) filled++;
+  if (referenceInput.value.trim() && !referenceInput.disabled) filled++;
+
+  const percent = Math.round((filled / total) * 100);
+
+  progressBar.style.width = percent + "%";
+
+  if (percent === 0) {
+    progressText.textContent = "CV henüz doldurulmadı";
+  } else if (percent < 50) {
+    progressText.textContent = "CV eksik görünüyor";
+  } else if (percent < 80) {
+    progressText.textContent = "CV neredeyse hazır";
+  } else {
+    progressText.textContent = "CV başvuruya hazır";
+  }
+}
 
 /* ================= PDF EXPORT ================= */
 downloadPdfBtn.onclick = () => {
@@ -147,3 +174,4 @@ downloadPdfBtn.onclick = () => {
       downloadPdfBtn.style.display = "block";
     });
 };
+updateProgress();

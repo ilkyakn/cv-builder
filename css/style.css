@@ -17,17 +17,16 @@ html, body {
 }
 
 /* =========================
-   BODY – TEK SCROLL (GLOBAL)
+   BODY
    ========================= */
 body {
   padding: 20px;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: none;
 }
 
 /* =========================
-   CONTAINER (DESKTOP)
+   CONTAINER (PC)
    ========================= */
 .container {
   display: flex;
@@ -116,7 +115,6 @@ body {
   margin: 8px 0;
 }
 
-/* Çok satırlı alanlar */
 #previewAbout,
 #previewEducation,
 #previewReference {
@@ -148,6 +146,23 @@ body {
 }
 
 /* =========================
+   PROGRESS BAR (GERİ GELDİ)
+   ========================= */
+#progressBar {
+  height: 10px;
+  width: 0%;
+  background: #2563eb;
+  border-radius: 6px;
+}
+
+#progressText {
+  display: block;
+  margin-top: 6px;
+  color: #374151;
+  font-size: 13px;
+}
+
+/* =========================
    PDF BUTONU
    ========================= */
 #downloadPdfBtn {
@@ -167,7 +182,61 @@ body {
 }
 
 /* =========================
-   PRINT (PDF)
+   MOBİL BUTONLAR
+   ========================= */
+.mobile-only {
+  display: none;
+}
+
+/* =========================
+   MOBİL
+   ========================= */
+@media (max-width: 768px) {
+
+  body {
+    padding: 16px;
+  }
+
+  .container {
+    display: block;
+  }
+
+  .form,
+  .preview {
+    width: 100%;
+  }
+
+  /* Mobilde normalde SADECE FORM */
+  .preview {
+    display: none;
+  }
+
+  .mobile-only {
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+    padding: 14px;
+    font-size: 16px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+  }
+
+  /* Önizleme açıkken */
+  body.preview-open .form {
+    display: none;
+  }
+
+  body.preview-open .preview {
+    display: block;
+    margin: 0;
+    box-shadow: none;
+  }
+}
+
+/* =========================
+   PRINT
    ========================= */
 @media print {
   body {
@@ -186,70 +255,5 @@ body {
   .preview {
     width: 100%;
     border-radius: 0;
-  }
-}
-
-/* =========================
-   MOBİL – TEMEL DAVRANIŞ
-   ========================= */
-@media (max-width: 768px) {
-
-  body {
-    padding: 16px;
-  }
-
-  .container {
-    display: block;
-  }
-
-  .form,
-  .preview {
-    width: 100%;
-  }
-
-  .preview {
-    margin-top: 20px;
-  }
-}
-
-/* =========================
-   MOBİL ÖNİZLEME MODU
-   ========================= */
-.mobile-only {
-  display: none;
-}
-
-@media (max-width: 768px) {
-
-  .mobile-only {
-    display: block;
-    width: 100%;
-    margin: 20px 0;
-    padding: 14px;
-    font-size: 16px;
-    background: #2563eb;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-  }
-
-  /* Normalde sadece form */
-  .preview {
-    display: none;
-  }
-
-  body.preview-open .form {
-    display: none;
-  }
-
-  body.preview-open .preview {
-    display: block;
-    width: 100%;
-    margin: 0;
-    box-shadow: none;
-  }
-
-  body.preview-open {
-    padding: 16px;
   }
 }
