@@ -217,3 +217,63 @@ body {
 .form-section-input {
   margin-bottom: 20px;
 }
+/* =========================
+   MOBİL GÖRÜNÜM
+   ========================= */
+@media (max-width: 768px) {
+
+  .container {
+    flex-direction: column;
+  }
+
+  .form,
+  .preview {
+    width: 100%;
+  }
+
+  .preview {
+    margin-top: 20px;
+  }
+
+}
+/* =========================
+   MOBİL TAM EKRAN ÖNİZLEME
+   ========================= */
+@media (max-width: 768px) {
+
+  .container {
+    flex-direction: column;
+  }
+
+  .form,
+  .preview {
+    width: 100%;
+  }
+
+  .preview {
+    padding: 20px;
+  }
+
+}
+/* =========================
+   MOBİL TAM EKRAN (KESİN)
+   ========================= */
+@media screen and (max-width: 768px) {
+
+  .container {
+    display: flex;
+    flex-direction: column !important;
+  }
+
+  .form {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .preview {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-top: 20px;
+  }
+
+}
