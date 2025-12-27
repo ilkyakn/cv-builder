@@ -17,7 +17,7 @@ html, body {
 }
 
 /* =========================
-   BODY (TEK SCROLL)
+   BODY
    ========================= */
 body {
   padding: 20px;
@@ -86,7 +86,7 @@ body {
 }
 
 /* =========================
-   PREVIEW (DESKTOP)
+   PREVIEW
    ========================= */
 .preview {
   width: 50%;
@@ -186,7 +186,7 @@ body {
 }
 
 /* =========================
-   MOBİL BUTONLAR (GİZLİ)
+   MOBİL BUTONLAR
    ========================= */
 .mobile-only {
   display: none;
@@ -210,13 +210,13 @@ body {
     width: 100%;
   }
 
-  /* MOBİLDE NORMALDE SADECE FORM */
+  /* Mobilde preview ekrandan çıkar (AMA display:none DEĞİL) */
   .preview {
-    display: none;
-    margin-top: 0;
+    position: absolute;
+    left: -9999px;
+    top: 0;
   }
 
-  /* MOBİL BUTONLAR AÇIK */
   .mobile-only {
     display: block;
     width: 100%;
@@ -235,11 +235,7 @@ body {
   }
 
   body.preview-open .preview {
-    display: block;
-  }
-
-  body.preview-open {
-    padding: 16px;
+    position: static;
   }
 }
 
@@ -247,6 +243,7 @@ body {
    PRINT (PDF)
    ========================= */
 @media print {
+
   body {
     background: #fff;
     padding: 0;
@@ -263,29 +260,10 @@ body {
   .preview {
     width: 100%;
     border-radius: 0;
+    position: static !important;
   }
 
-  #downloadPdfBtn {
-    display: none;
-  }
-}
-/* =========================
-   PDF / PRINT TEMİZLİK
-   ========================= */
-@media print {
-
-  /* Mobil butonlar PDF'e girmesin */
-  .mobile-only {
-    display: none !important;
-  }
-
-  /* Geri butonu PDF'e girmesin */
-  #closePreviewBtn,
-  #openPreviewBtn {
-    display: none !important;
-  }
-
-  /* PDF butonu da görünmesin */
+  .mobile-only,
   #downloadPdfBtn {
     display: none !important;
   }
