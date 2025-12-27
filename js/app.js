@@ -175,38 +175,34 @@ if (openPreviewBtn && closePreviewBtn) {
 downloadPdfBtn.onclick = () => {
   downloadPdfBtn.style.display = "none";
 
-  const clone = cv.cloneNode(true);
+  // PDF anında geçici sadeleştirme
+  const originalBoxShadow = cv.style.boxShadow;
+  const originalBorderRadius = cv.style.borderRadius;
 
-  const wrapper = document.createElement("div");
-  wrapper.style.position = "fixed";
-  wrapper.style.left = "-9999px";
-  wrapper.style.top = "0";
-  wrapper.style.width = "210mm";
-  wrapper.style.padding = "20mm";
-  wrapper.style.background = "#fff";
-  wrapper.style.boxSizing = "border-box";
-
-  clone.style.margin = "0";
-  clone.style.padding = "0";
-  clone.style.boxShadow = "none";
-  clone.style.borderRadius = "0";
-
-  wrapper.appendChild(clone);
-  document.body.appendChild(wrapper);
+  cv.style.boxShadow = "none";
+  cv.style.borderRadius = "0";
 
   html2pdf()
-    .from(wrapper)
+    .from(cv)
     .set({
-      margin: 0,
+      margin: 10,
       filename: "cv.pdf",
-      html2canvas: { scale: 2, useCORS: true },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        scrollY: 0
+      },
+      jsPDF: {
+        unit: "mm",
+        format: "a4",
+        orientation: "portrait"
+      }
     })
     .save()
     .then(() => {
-      document.body.removeChild(wrapper);
+      // eski haline geri al
+      cv.style.boxShadow = originalBoxShadow;
+      cv.style.borderRadius = originalBorderRadius;
       downloadPdfBtn.style.display = "block";
     });
 };
-
-updateProgress();
