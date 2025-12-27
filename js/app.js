@@ -75,7 +75,7 @@ colorSelect.onchange = () => {
   cv.classList.add(colorSelect.value);
 };
 
-/* ================= BÖLÜM GÖSTER/GİZLE ================= */
+/* ================= BÖLÜM GÖSTER / GİZLE ================= */
 function syncSection(toggle, section, input) {
   section.style.display = toggle.checked ? "block" : "none";
   input.disabled = !toggle.checked;
@@ -89,22 +89,28 @@ toggleAbout.onchange();
 toggleEducation.onchange();
 toggleReference.onchange();
 
-/* ================= MOBİL ÖNİZLEME MODU ================= */
+/* ================= MOBİL ÖNİZLEME (SADECE MOBİL) ================= */
+function isMobile() {
+  return window.matchMedia("(max-width: 768px)").matches;
+}
+
 if (openPreviewBtn && closePreviewBtn) {
 
   openPreviewBtn.onclick = () => {
+    if (!isMobile()) return;
     document.body.classList.add("preview-open");
     window.scrollTo(0, 0);
   };
 
   closePreviewBtn.onclick = () => {
+    if (!isMobile()) return;
     document.body.classList.remove("preview-open");
     window.scrollTo(0, 0);
   };
 
 }
 
-/* ================= PDF EXPORT (STABİL) ================= */
+/* ================= PDF EXPORT ================= */
 downloadPdfBtn.onclick = () => {
   downloadPdfBtn.style.display = "none";
 
