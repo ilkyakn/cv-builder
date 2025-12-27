@@ -6,34 +6,43 @@
 }
 
 :root {
-  --theme-color: #000; /* varsayılan: siyah */
+  --theme-color: #000;
 }
 
-body {
+html, body {
   margin: 0;
-  padding: 20px;
+  padding: 0;
   background: #f3f4f6;
   font-family: Arial, sans-serif;
 }
 
 /* =========================
-   ANA YAPI
+   BODY – TEK SCROLL (GLOBAL)
+   ========================= */
+body {
+  padding: 20px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: none;
+}
+
+/* =========================
+   CONTAINER (DESKTOP)
    ========================= */
 .container {
   display: flex;
   gap: 20px;
+  align-items: flex-start;
 }
 
 /* =========================
-   SOL FORM
+   FORM
    ========================= */
 .form {
   width: 50%;
   background: #fff;
   padding: 20px;
   border-radius: 8px;
-  max-height: 90vh;
-  overflow-y: auto;
 }
 
 .form label {
@@ -51,27 +60,19 @@ body {
   font-size: 14px;
 }
 
-/* Checkbox hizası */
 .form label input[type="checkbox"] {
   width: auto;
   margin-right: 6px;
 }
 
-.form label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
 /* =========================
-   SAĞ ÖNİZLEME
+   PREVIEW
    ========================= */
 .preview {
   width: 50%;
   background: #fff;
   padding: 30px;
   border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
   line-height: 1.45;
 }
 
@@ -85,53 +86,37 @@ body {
   margin-bottom: 28px;
 }
 
-/* =========================
-   FOTO
-   ========================= */
 #previewPhoto {
   width: 100px;
   height: 100px;
   object-fit: cover;
   border-radius: 50%;
-  flex-shrink: 0;
 }
 
 /* =========================
-   İSİM & MESLEK
+   METİNLER
    ========================= */
-.preview .info {
-  display: flex;
-  flex-direction: column;
-}
-
 .preview h1 {
   margin: 0;
   font-size: 28px;
 }
 
 .preview h3 {
-  margin-top: 4px;
-  margin-bottom: 14px;
-  font-weight: normal;
+  margin: 4px 0 14px;
   font-size: 16px;
-}
-
-/* =========================
-   METİN & BÖLÜMLER
-   ========================= */
-.preview p {
-  margin: 8px 0;
+  font-weight: normal;
 }
 
 .preview h4 {
   margin-top: 22px;
   margin-bottom: 6px;
-  font-size: 15px;
 }
 
-/* =========================
-   SATIR ATLAYABİLİR ALANLAR
-   ========================= */
+.preview p {
+  margin: 8px 0;
+}
+
+/* Çok satırlı alanlar */
 #previewAbout,
 #previewEducation,
 #previewReference {
@@ -140,9 +125,8 @@ body {
 }
 
 /* =========================
-   RENK SİSTEMİ
+   RENK TEMASI
    ========================= */
-/* Sadece başlıklar renk alır */
 .preview h1,
 .preview h3,
 .preview h4,
@@ -150,15 +134,11 @@ body {
   color: var(--theme-color);
 }
 
-/* Metinler her zaman siyah */
 .preview p,
 .preview span {
   color: #000;
 }
 
-/* =========================
-   TEMALAR
-   ========================= */
 .preview.mono {
   --theme-color: #000;
 }
@@ -187,7 +167,7 @@ body {
 }
 
 /* =========================
-   PDF UYUMLULUK
+   PRINT (PDF)
    ========================= */
 @media print {
   body {
@@ -205,25 +185,21 @@ body {
 
   .preview {
     width: 100%;
-    box-shadow: none;
     border-radius: 0;
   }
 }
-.form-section-title {
-  margin-top: 20px;
-  display: block;
-}
 
-.form-section-input {
-  margin-bottom: 20px;
-}
 /* =========================
-   MOBİL GÖRÜNÜM
+   MOBİL – TEMEL DAVRANIŞ
    ========================= */
 @media (max-width: 768px) {
 
+  body {
+    padding: 16px;
+  }
+
   .container {
-    flex-direction: column;
+    display: block;
   }
 
   .form,
@@ -234,46 +210,46 @@ body {
   .preview {
     margin-top: 20px;
   }
-
 }
+
 /* =========================
-   MOBİL TAM EKRAN ÖNİZLEME
+   MOBİL ÖNİZLEME MODU
    ========================= */
+.mobile-only {
+  display: none;
+}
+
 @media (max-width: 768px) {
 
-  .container {
-    flex-direction: column;
-  }
-
-  .form,
-  .preview {
+  .mobile-only {
+    display: block;
     width: 100%;
+    margin: 20px 0;
+    padding: 14px;
+    font-size: 16px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
   }
 
+  /* Normalde sadece form */
   .preview {
-    padding: 20px;
+    display: none;
   }
 
-}
-/* =========================
-   MOBİL TAM EKRAN (KESİN)
-   ========================= */
-@media screen and (max-width: 768px) {
-
-  .container {
-    display: flex;
-    flex-direction: column !important;
+  body.preview-open .form {
+    display: none;
   }
 
-  .form {
-    width: 100% !important;
-    max-width: 100% !important;
+  body.preview-open .preview {
+    display: block;
+    width: 100%;
+    margin: 0;
+    box-shadow: none;
   }
 
-  .preview {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-top: 20px;
+  body.preview-open {
+    padding: 16px;
   }
-
 }

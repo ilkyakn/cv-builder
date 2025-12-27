@@ -15,54 +15,44 @@
 
     <h2>CV Bilgileri</h2>
 
+    <!-- KİŞİSEL -->
     <label for="nameInput">Ad Soyad</label>
-    <input type="text" id="nameInput" placeholder="Ad Soyad">
+    <input type="text" id="nameInput">
 
     <label for="jobInput">Meslek</label>
-    <input type="text" id="jobInput" placeholder="Meslek">
+    <input type="text" id="jobInput">
 
     <label for="phoneInput">Telefon</label>
-    <input type="text" id="phoneInput" placeholder="Telefon">
+    <input type="text" id="phoneInput">
 
     <label for="addressInput">Adres</label>
-    <input type="text" id="addressInput" placeholder="Adres">
+    <input type="text" id="addressInput">
 
-    <label for="aboutInput">Hakkımda</label>
+    <!-- HAKKINDA -->
+    <label>Hakkımda</label>
     <label class="checkbox">
-  <input type="checkbox" id="toggleAbout" checked>
-  Hakkımda bölümünü göster
-</label>
-    <textarea id="aboutInput" placeholder="Kendinizden bahsedin"></textarea>
-    <small id="aboutWarning" style="display:none; color:#b45309;">
-  Bu bölüm biraz uzun olabilir, sadeleştirmeyi düşünebilirsin.
-</small>
-<small id="aboutInfo" style="display:none; color:#6b7280;">
-  Bu bölüm kapalı
-</small>
-    <label for="educationInput">Eğitim</label>
+      <input type="checkbox" id="toggleAbout" checked>
+      Hakkımda bölümünü göster
+    </label>
+    <textarea id="aboutInput"></textarea>
+
+    <!-- EĞİTİM -->
+    <label>Eğitim</label>
     <label class="checkbox">
-  <input type="checkbox" id="toggleEducation" checked>
-  Eğitim bölümünü göster
-</label>
-    <textarea id="educationInput" placeholder="Eğitim bilgileri"></textarea>
-    <small id="educationWarning" style="display:none; color:#b45309;">
-  Eğitim bölümü uzun görünüyor, en önemli kısımları bırakmak isteyebilirsin.
-</small>
-    <small id="educationInfo" style="display:none; color:#6b7280;">
-  Bu bölüm kapalı
-</small>
-    <label for="referenceInput">Referans</label>
+      <input type="checkbox" id="toggleEducation" checked>
+      Eğitim bölümünü göster
+    </label>
+    <textarea id="educationInput"></textarea>
+
+    <!-- REFERANS -->
+    <label>Referans</label>
     <label class="checkbox">
-  <input type="checkbox" id="toggleReference" checked>
-  Referans bölümünü göster
-</label>
-    <textarea id="referenceInput" placeholder="Referanslar"></textarea>
-    <small id="referenceWarning" style="display:none; color:#b45309;">
-  Referanslar genelde kısa tutulur, sadeleştirmek daha profesyonel durur.
-</small>
-<small id="referenceInfo" style="display:none; color:#6b7280;">
-  Bu bölüm kapalı
-</small>
+      <input type="checkbox" id="toggleReference" checked>
+      Referans bölümünü göster
+    </label>
+    <textarea id="referenceInput"></textarea>
+
+    <!-- FOTO -->
     <label for="photoInput">Fotoğraf</label>
     <input type="file" id="photoInput" accept="image/*">
 
@@ -71,6 +61,7 @@
       Fotoğrafı CV'de göster
     </label>
 
+    <!-- FONT -->
     <label for="fontSelect">Yazı Fontu</label>
     <select id="fontSelect">
       <option value="Arial">Arial</option>
@@ -79,33 +70,27 @@
       <option value="Courier New">Courier New</option>
     </select>
 
-    <!-- ŞABLON (şimdilik sabit, JS bozulmasın diye tutuluyor) -->
-    <label>CV Şablonu</label>
-    <select disabled>
-      <option>Modern</option>
-    </select>
-
+    <!-- RENK -->
     <label for="colorSelect">Renk Teması</label>
     <select id="colorSelect">
       <option value="mono" selected>Siyah - Beyaz</option>
       <option value="blue">Mavi</option>
     </select>
-    <label>CV Doluluk Durumu</label>
-<div style="margin-top:6px;">
-  <div style="background:#e5e7eb; height:10px; border-radius:6px;">
-    <div id="progressBar"
-         style="height:10px; width:0%; background:#2563eb; border-radius:6px;">
-    </div>
-  </div>
-  <small id="progressText" style="display:block; margin-top:6px; color:#374151;">
-    CV henüz doldurulmadı
-  </small>
-</div>
-    
+
+    <!-- 📱 MOBİL: ÖNİZLEMEYİ AÇ -->
+    <button id="openPreviewBtn" class="mobile-only">
+      Önizlemeyi Gör
+    </button>
+
   </div>
 
   <!-- ================= SAĞ ÖNİZLEME ================= -->
   <div class="preview modern mono" id="cv">
+
+    <!-- 📱 MOBİL: GERİ -->
+    <button id="closePreviewBtn" class="mobile-only">
+      ← Düzenlemeye Dön
+    </button>
 
     <!-- HEADER -->
     <div class="header">
@@ -114,7 +99,6 @@
         src="assets/default-avatar.png"
         alt="Fotoğraf"
       >
-
       <div class="info">
         <h1 id="previewName">Ad Soyad</h1>
         <h3 id="previewJob">Meslek</h3>
@@ -126,28 +110,28 @@
     <p><strong>Adres:</strong> <span id="previewAddress">-</span></p>
 
     <!-- HAKKINDA -->
-   <div id="aboutSection">
-  <h4>Hakkımda</h4>
-  <p id="previewAbout">-</p>
-</div>
+    <div id="aboutSection">
+      <h4>Hakkımda</h4>
+      <p id="previewAbout">-</p>
+    </div>
 
     <!-- EĞİTİM -->
-  <div id="educationSection">
-  <h4>Eğitim</h4>
-  <p id="previewEducation">-</p>
-</div>
+    <div id="educationSection">
+      <h4>Eğitim</h4>
+      <p id="previewEducation">-</p>
+    </div>
 
     <!-- REFERANS -->
-   <div id="referenceSection">
-  <h4>Referans</h4>
-  <p id="previewReference">-</p>
-</div>
+    <div id="referenceSection">
+      <h4>Referans</h4>
+      <p id="previewReference">-</p>
+    </div>
 
   </div>
 
 </div>
 
-<!-- PDF BUTONU (CV DIŞINDA) -->
+<!-- PDF -->
 <button id="downloadPdfBtn">PDF olarak indir</button>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
