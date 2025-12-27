@@ -269,3 +269,24 @@ body {
     display: none;
   }
 }
+/* =========================
+   PDF / PRINT TEMİZLİK
+   ========================= */
+@media print {
+
+  /* Mobil butonlar PDF'e girmesin */
+  .mobile-only {
+    display: none !important;
+  }
+
+  /* Geri butonu PDF'e girmesin */
+  #closePreviewBtn,
+  #openPreviewBtn {
+    display: none !important;
+  }
+
+  /* PDF butonu da görünmesin */
+  #downloadPdfBtn {
+    display: none !important;
+  }
+}
