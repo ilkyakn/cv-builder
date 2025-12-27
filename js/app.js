@@ -175,12 +175,12 @@ if (openPreviewBtn && closePreviewBtn) {
 downloadPdfBtn.onclick = () => {
   downloadPdfBtn.style.display = "none";
 
-  // PDF anında geçici sadeleştirme
-  const originalBoxShadow = cv.style.boxShadow;
-  const originalBorderRadius = cv.style.borderRadius;
+  // 🔴 KRİTİK: PDF sırasında CV'yi zorla görünür yap
+  const wasPreviewOpen = document.body.classList.contains("preview-open");
+  const originalDisplay = cv.style.display;
 
-  cv.style.boxShadow = "none";
-  cv.style.borderRadius = "0";
+  cv.style.display = "block";
+  document.body.classList.add("preview-open");
 
   html2pdf()
     .from(cv)
@@ -200,9 +200,11 @@ downloadPdfBtn.onclick = () => {
     })
     .save()
     .then(() => {
-      // eski haline geri al
-      cv.style.boxShadow = originalBoxShadow;
-      cv.style.borderRadius = originalBorderRadius;
+      // 🔁 eski durumu geri al
+      cv.style.display = originalDisplay;
+      if (!wasPreviewOpen) {
+        document.body.classList.remove("preview-open");
+      }
       downloadPdfBtn.style.display = "block";
     });
 };
