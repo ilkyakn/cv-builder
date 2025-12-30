@@ -358,12 +358,13 @@ function isMobile() {
 }
 
 openPreviewBtn.addEventListener("click", () => {
-  if (isMobile()) document.body.classList.add("preview-open");
+  document.body.classList.add("preview-open");
 });
 
 closePreviewBtn.addEventListener("click", () => {
-  if (isMobile()) document.body.classList.remove("preview-open");
+  document.body.classList.remove("preview-open");
 });
+
 function generatePdfFileName() {
   const name = nameInput.value.trim() || "cv";
 
