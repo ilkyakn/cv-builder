@@ -158,36 +158,48 @@
 
   <!-- ================= SAĞ ÖNİZLEME ================= -->
   <div class="preview mono" id="cv">
+    <div id="dragHint" class="drag-hint">
+  CV bölümlerini sürükleyerek sıralayabilirsin
+</div>
 
     <button id="closePreviewBtn" class="mobile-only" data-i18n="closePreview">
      ← Düzenlemeye Dön
     </button>
 
     <div class="header">
-      <img id="previewPhoto" src="assets/default-avatar.png" alt="Fotoğraf">
-      <div class="info">
-        <h1 id="previewName">Ad Soyad</h1>
-        <h3 id="previewJob">Meslek</h3>
-      </div>
+  <img id="previewPhoto" src="assets/default-avatar.svg" alt="Fotoğraf">
+
+  <div class="info">
+    <h1 id="previewName">Ad Soyad</h1>
+    <h3 id="previewJob">Meslek</h3>
+  </div>
+
+  <!-- AD SOYAD HİZASINDA SAĞ TARAF YARDIM İKONU -->
+  <div class="header-help no-print">
+    <span class="help-icon" tabindex="0">?</span>
+    <div class="help-tooltip">
+      CV bölümlerinin yerini sürükleyerek değiştirebilirsin
     </div>
+  </div>
+</div>
 
     <!-- İLETİŞİM ÖNİZLEME -->
-    <div id="contactSection">
+    <div id="contactSection" class="cv-section" draggable="true" data-section="contact">
       <p><strong><span data-i18n="phone">Telefon</span>:</strong> <span id="previewPhone">-</span></p>
       <p><strong><span data-i18n="address">Adres</span>:</strong> <span id="previewAddress">-</span></p>
     </div>
 
-    <div id="aboutSection">
+    <div id="aboutSection" class="cv-section" draggable="true" data-section="about">
       <h4 data-i18n="about">Hakkımda</h4>
       <p id="previewAbout">-</p>
     </div>
 
-    <div id="educationSection">
+    <div id="educationSection" class="cv-section" draggable="true" data-section="education">
       <h4 data-i18n="education">Eğitim</h4>
       <p id="previewEducation">-</p>
     </div>
 
-    <div id="referenceSection">
+    <div id="referenceSection" class="cv-section" draggable="true" data-section="reference">
       <h4 data-i18n="reference">Referans</h4>
       <p id="previewReference">-</p>
     </div>
