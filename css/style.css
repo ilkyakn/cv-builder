@@ -57,8 +57,24 @@ body {
 .form select {
   width: 100%;
   margin-top: 6px;
-  padding: 8px;
+  padding: 10px 12px;
   font-size: 14px;
+
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+
+  transition: 
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.form input:focus,
+.form textarea:focus,
+.form select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .form textarea {
@@ -166,7 +182,6 @@ body {
   color: var(--theme-color);
 }
 
-.preview span,
 .preview p {
   color: #000;
 }
@@ -186,8 +201,13 @@ body {
 #resetBtn,
 .mobile-only {
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
 }
 
 #downloadPdfBtn {
@@ -199,11 +219,31 @@ body {
   color: #fff;
 }
 
+#downloadPdfBtn:hover {
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.25);
+  transform: translateY(-1px);
+}
+
+#downloadPdfBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 12px rgba(37, 99, 235, 0.2);
+}
+
 #resetBtn {
   margin-top: 20px;
   padding: 10px;
   background: #ef4444;
   color: #fff;
+} 
+
+#resetBtn:hover {
+  box-shadow: 0 8px 16px rgba(239, 68, 68, 0.25);
+  transform: translateY(-1px);
+}
+
+#resetBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2);
 }
 
 /* =========================
@@ -211,6 +251,16 @@ body {
    ========================= */
 .mobile-only {
   display: none;
+  .mobile-only:hover {
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.25);
+  transform: translateY(-1px);
+}
+
+.mobile-only:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+}
+
 }
 
 @media (max-width: 768px) {
@@ -288,10 +338,21 @@ h4 {
 }
 
 label.checkbox {
-  margin-top: 6px;
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  font-weight: normal;
+  cursor: pointer;
 }
+
 #closePreviewBtn {
   position: relative;
   top: -20px; /* BURAYI SEN AYARLAYACAKSIN */
+}
+
+.form input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #2563eb;
 }

@@ -113,21 +113,30 @@ const progressText = get("progressText");
 const downloadPdfBtn = get("downloadPdfBtn");
 
 /* ================= CANLI METİN ================= */
-function bindInput(input, preview, fallback = "-") {
+function bindInput(input, preview, i18nKey, defaultDash = false) {
   input.addEventListener("input", () => {
-    preview.textContent = input.value || fallback;
+    if (input.value.trim()) {
+      preview.textContent = input.value;
+    } else {
+      const lang = languageSelect.value;
+      preview.textContent = defaultDash
+        ? "-"
+        : translations[lang][i18nKey];
+    }
+
     updateProgress();
     saveToStorage();
   });
 }
 
-bindInput(nameInput, previewName, "Ad Soyad");
-bindInput(jobInput, previewJob, "Meslek");
-bindInput(phoneInput, previewPhone);
-bindInput(addressInput, previewAddress);
-bindInput(aboutInput, previewAbout);
-bindInput(educationInput, previewEducation);
-bindInput(referenceInput, previewReference);
+bindInput(nameInput, previewName, "name");
+bindInput(jobInput, previewJob, "job");
+
+bindInput(phoneInput, previewPhone, null, true);
+bindInput(addressInput, previewAddress, null, true);
+bindInput(aboutInput, previewAbout, null, true);
+bindInput(educationInput, previewEducation, null, true);
+bindInput(referenceInput, previewReference, null, true);
 
 /* ================= FOTO ================= */
 photoInput.addEventListener("change", () => {
@@ -184,6 +193,7 @@ function syncSection(toggle, section, input) {
   section.style.display = toggle.checked ? "block" : "none";
   input.disabled = !toggle.checked;
 }
+
 function syncContactSection() {
   contactSection.style.display = toggleContact.checked ? "block" : "none";
   phoneInput.disabled = !toggleContact.checked;
@@ -366,20 +376,98 @@ function generatePdfFileName() {
     .replace(/-+/g, "-")
     + "-cv.pdf";
 }
+function willExceedOnePage(sourceEl) {
+  const A4_HEIGHT_PX = 1122;
+
+  // Ölçüm için AYRI bir clone
+  const measureClone = sourceEl.cloneNode(true);
+
+  measureClone.style.position = "absolute";
+  measureClone.style.visibility = "hidden";
+  measureClone.style.width = "210mm";
+  measureClone.style.top = "0";
+  measureClone.style.left = "0";
+
+  document.body.appendChild(measureClone);
+
+  const height = measureClone.scrollHeight;
+
+  document.body.removeChild(measureClone);
+
+  const TOLERANCE = 120; // px — ayarlanabilir
+
+  return height > (A4_HEIGHT_PX + TOLERANCE);
+}
 
 /* ================= PDF ================= */
 downloadPdfBtn.addEventListener("click", () => {
   const cvEl = document.getElementById("cv");
+  const clone = cvEl.cloneNode(true);
 
-  // PDF sırasında UI elemanlarını geçici gizle
-  const hiddenEls = cvEl.querySelectorAll(".mobile-only");
-  hiddenEls.forEach(el => el.style.display = "none");
+  /* ================= AD SOYAD KONTROL ================= */
+  const nameText = nameInput.value.trim();
 
+  if (!nameText) {
+    const proceed = confirm(
+      "Ad Soyad alanı boş.\nCV isimsiz olarak oluşturulacak.\n\nYine de devam etmek istiyor musun?"
+    );
+
+    if (!proceed) return;
+  }
+
+    /* ================= TEK SAYFA KONTROL ================= */
+  if (willExceedOnePage(clone)) {
+    const proceed = confirm(
+      "CV tek sayfayı aşabilir.\n" +
+      "CV’ler genellikle tek sayfa olur.\n\n" +
+      "Yine de devam etmek istiyor musun?"
+    );
+
+    if (!proceed) return;
+  }
+
+  /* ================= BOŞ ALAN TEMİZLEME ================= */
+
+  const cleanupMap = [
+    { input: jobInput, selector: "#previewJob" },
+    { input: phoneInput, selector: "#previewPhone", parent: "p" },
+    { input: addressInput, selector: "#previewAddress", parent: "p" },
+    { input: aboutInput, selector: "#aboutSection" },
+    { input: educationInput, selector: "#educationSection" },
+    { input: referenceInput, selector: "#referenceSection" }
+  ];
+
+  cleanupMap.forEach(item => {
+  if (!item.input.value.trim()) {
+    const el = clone.querySelector(item.selector);
+    if (!el) return;
+
+    // parent belirtilmişse parent'ı sil
+    if (item.parent) {
+      const parentEl = el.closest(item.parent);
+      if (parentEl) parentEl.remove();
+    } else {
+      el.remove();
+    }
+  }
+});
+
+
+  /* ================= AD SOYAD SİLME ================= */
+  if (!nameText) {
+    const header = clone.querySelector(".header");
+    if (header) header.remove();
+  }
+
+  /* ================= MOBİL UI TEMİZLE ================= */
+  clone.querySelectorAll(".mobile-only").forEach(el => el.remove());
+
+  /* ================= PDF ================= */
   html2pdf()
-    .from(cvEl)
+    .from(clone)
     .set({
       margin: 0,
-     filename: generatePdfFileName(),
+      filename: generatePdfFileName(),
       html2canvas: {
         scale: 2,
         useCORS: true,
@@ -391,11 +479,7 @@ downloadPdfBtn.addEventListener("click", () => {
         orientation: "portrait"
       }
     })
-    .save()
-    .then(() => {
-      // Geri aç
-      hiddenEls.forEach(el => el.style.display = "");
-    });
+    .save();
 });
 
 /* ================= INIT ================= */
