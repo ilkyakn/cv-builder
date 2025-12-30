@@ -679,13 +679,21 @@ document.querySelectorAll(".cv-section").forEach(section => {
       .forEach(s => s.classList.remove("drop-active"));
 
     if (target && target !== touchDraggedSection) {
-      target.after(touchDraggedSection);
+  const rect = target.getBoundingClientRect();
+  const middleY = rect.top + rect.height / 2;
 
-      // sıra kaydet
-      if (typeof saveSectionOrder === "function") {
-        saveSectionOrder();
-      }
-    }
+  if (touch.clientY < middleY) {
+    // 🔼 üstüne koy
+    target.before(touchDraggedSection);
+  } else {
+    // 🔽 altına koy
+    target.after(touchDraggedSection);
+  }
+
+  if (typeof saveSectionOrder === "function") {
+    saveSectionOrder();
+  }
+}
 
     touchDraggedSection.classList.remove("dragging");
     touchDraggedSection = null;
