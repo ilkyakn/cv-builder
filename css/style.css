@@ -12,9 +12,19 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: #f3f4f6;
+  min-height: 100vh;
   font-family: Arial, sans-serif;
+
+  background:
+    radial-gradient(
+      circle at top center,
+      #3a8dff 0%,
+      #1e5bbf 35%,
+      #0b2e6f 70%,
+      #061a3a 100%
+    );
 }
+
 
 /* =========================
    BODY
@@ -30,6 +40,7 @@ body {
   display: flex;
   gap: 20px;
   align-items: flex-start;
+  margin-top: 20px;
 }
 
 /* =========================
@@ -37,7 +48,7 @@ body {
    ========================= */
 .form {
   width: 50%;
-  background: #fff;
+  background: #e8f0ff;
   padding: 20px;
   border-radius: 8px;
 }
@@ -143,6 +154,7 @@ body {
   background: #fff;
   padding: 30px;
   border-radius: 8px;
+  min-height: 900px;
   line-height: 1.45;
   word-wrap: break-word;
 }
@@ -290,6 +302,13 @@ body {
 
   body {
     padding: 16px;
+    background:
+      linear-gradient(
+        180deg,
+        #2f7ef7 0%,
+        #1e5bbf 50%,
+        #0b2e6f 100%
+      );
   }
 
   .container {
@@ -626,3 +645,56 @@ label.checkbox {
     user-select: none;
   }
 }
+
+.form,
+.preview {
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.25),
+    0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* =========================
+   INTRO / TOP BANNER
+   ========================= */
+
+.intro {
+  max-width: 1100px;
+  margin: 0 auto 24px auto;
+  padding: 24px 20px 10px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.intro h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.intro p {
+  margin-top: 8px;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+/* Mobil ayar */
+@media (max-width: 768px) {
+  .intro {
+    padding: 16px 12px 6px;
+  }
+
+  .intro h1 {
+    font-size: 22px;
+  }
+
+  .intro p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .preview {
+    min-height: 700px;
+  }
+}
+
