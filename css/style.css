@@ -69,6 +69,31 @@ body {
     box-shadow 0.2s ease;
 }
 
+.form select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background-image:
+    linear-gradient(45deg, transparent 50%, #6b7280 50%),
+    linear-gradient(135deg, #6b7280 50%, transparent 50%),
+    linear-gradient(to right, #e5e7eb, #e5e7eb);
+
+  background-position:
+    calc(100% - 18px) 50%,
+    calc(100% - 12px) 50%,
+    calc(100% - 36px) 50%;
+
+  background-size:
+    6px 6px,
+    6px 6px,
+    1px 60%;
+
+  background-repeat: no-repeat;
+
+  padding-right: 40px;
+}
+
 .form input:focus,
 .form textarea:focus,
 .form select:focus {
@@ -79,14 +104,6 @@ body {
 
 .form textarea {
   resize: vertical;
-}
-
-.form .checkbox {
-  font-weight: normal;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 6px;
 }
 
 .form input[type="checkbox"] {
@@ -234,6 +251,8 @@ body {
   padding: 10px;
   background: #ef4444;
   color: #fff;
+  position: relative;
+  top: -95px;
 } 
 
 #resetBtn:hover {
@@ -251,7 +270,9 @@ body {
    ========================= */
 .mobile-only {
   display: none;
-  .mobile-only:hover {
+}
+
+.mobile-only:hover {
   box-shadow: 0 8px 16px rgba(37, 99, 235, 0.25);
   transform: translateY(-1px);
 }
@@ -259,8 +280,6 @@ body {
 .mobile-only:active {
   transform: translateY(0);
   box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
-}
-
 }
 
 @media (max-width: 768px) {
@@ -327,11 +346,7 @@ body {
 .preview.pdf p {
   margin: 4px 0;
 }
-/* Sıfırla butonunu PDF ile aynı hizaya getir */
-#resetBtn {
-  position: relative;
-  top: -95px; /* gerekirse 48–56 arası oynatabilirsin */
-}
+
 /* Bölüm başlığı (h4) ile checkbox arasındaki boşluk */
 h4 {
   margin-bottom: 6px;
@@ -342,8 +357,11 @@ label.checkbox {
   align-items: center;
   gap: 10px;
   margin-top: 8px;
-  font-weight: normal;
+
+  font-size: 14px;
+  color: #111827;
   cursor: pointer;
+  user-select: none;
 }
 
 #closePreviewBtn {
@@ -352,7 +370,16 @@ label.checkbox {
 }
 
 .form input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+
+  cursor: pointer;
   accent-color: #2563eb;
+
+  transition: transform 0.15s ease;
+}
+
+.form input[type="checkbox"]:hover {
+  transform: scale(1.05);
 }
