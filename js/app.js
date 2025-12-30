@@ -155,7 +155,11 @@ photoInput.addEventListener("change", () => {
 });
 
 photoToggle.addEventListener("change", () => {
-  previewPhoto.style.display = photoToggle.checked ? "block" : "none";
+const shouldShowPhoto =
+  d.photoToggle !== false && d.photo && d.photo.startsWith("data:image");
+
+previewPhoto.style.display = shouldShowPhoto ? "block" : "none";
+previewPhoto.src = shouldShowPhoto ? d.photo : DEFAULT_AVATAR;
   saveToStorage();
 });
 
@@ -268,7 +272,9 @@ function saveToStorage() {
     photoToggle: photoToggle.checked,
     font: fontSelect.value,
     color: colorSelect.value,
-    photo: previewPhoto.src
+    photo: previewPhoto.src.startsWith("data:image")
+  ? previewPhoto.src
+  : null
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
