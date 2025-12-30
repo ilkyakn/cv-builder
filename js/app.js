@@ -624,6 +624,7 @@ document.addEventListener("DOMContentLoaded", () => {
 let touchDraggedSection = null;
 let touchStartY = 0;
 let isDraggingTouch = false;
+let longPressTimer = null;
 
 document.querySelectorAll(".cv-section").forEach(section => {
 
@@ -661,44 +662,34 @@ document.querySelectorAll(".cv-section").forEach(section => {
   }, { passive: false });
 
   section.addEventListener("touchend", e => {
-    document.body.style.userSelect = "";
-    clearTimeout(longPressTimer);
+  document.body.style.userSelect = "";
+  clearTimeout(longPressTimer);
 
-    if (!isDraggingTouch || !touchDraggedSection) {
-      isDraggingTouch = false;
-      return;
-    }
-
-    const touch = e.changedTouches[0];
-    const target = document.elementFromPoint(
-      touch.clientX,
-      touch.clientY
-    )?.closest(".cv-section");
-
-    document.querySelectorAll(".cv-section")
-      .forEach(s => s.classList.remove("drop-active"));
-
-    if (target && target !== touchDraggedSection) {
-  const rect = target.getBoundingClientRect();
-  const middleY = rect.top + rect.height / 2;
-
-  if (touch.clientY < middleY) {
-    // 🔼 üstüne koy
-    target.before(touchDraggedSection);
-  } else {
-    // 🔽 altına koy
-    target.after(touchDraggedSection);
-  }
-
-  if (typeof saveSectionOrder === "function") {
-    saveSectionOrder();
-  }
-}
-
-    touchDraggedSection.classList.remove("dragging");
-    touchDraggedSection = null;
+  if (!isDraggingTouch || !touchDraggedSection) {
     isDraggingTouch = false;
-  });
+    return;
+  }
 
+  const touch = e.changedTouches[0];
+  const target = document.elementFromPoint(
+    touch.clientX,
+    touch.clientY
+  )?.closest(".cv-section");
+
+  document.querySelectorAll(".cv-section")
+    .forEach(s => s.classList.remove("drop-active"));
+
+  if (target && target !== touchDraggedSection) {
+    target.before(touchDraggedSection);
+
+    if (typeof saveSectionOrder === "function") {
+      saveSectionOrder();
+    }
+  }
+
+  touchDraggedSection.classList.remove("dragging");
+  touchDraggedSection = null;
+  isDraggingTouch = false;
 });
 
+});
