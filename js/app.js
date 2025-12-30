@@ -581,21 +581,18 @@ document.addEventListener("DOMContentLoaded", () => {
   section.classList.add("drop-active");
 });
 
-    section.addEventListener("drop", e => {
+   section.addEventListener("drop", e => {
   e.preventDefault();
 
   if (!draggedSection || draggedSection === section) return;
 
-  const rect = section.getBoundingClientRect();
-  const middleY = rect.top + rect.height / 2;
+  const placeholder = document.createElement("div");
 
-  if (e.clientY < middleY) {
-    // üst yarıya bırakıldı → üstüne koy
-    parent.insertBefore(draggedSection, section);
-  } else {
-    // alt yarıya bırakıldı → altına koy
-    parent.insertBefore(draggedSection, section.nextSibling);
-  }
+  parent.insertBefore(placeholder, draggedSection);
+  parent.insertBefore(draggedSection, section);
+  parent.insertBefore(section, placeholder);
+
+  placeholder.remove();
 
   parent
     .querySelectorAll(".cv-section")
@@ -621,75 +618,70 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* ================= MOBILE TOUCH DRAG ================= */
 
-let touchDraggedSection = null;
-let touchStartY = 0;
-let isDraggingTouch = false;
-let longPressTimer = null;
+document.addEventListener("DOMContentLoaded", () => {
 
-document.querySelectorAll(".cv-section").forEach(section => {
+  const parent = document.getElementById("cv");
+  if (!parent) return;
 
-  section.addEventListener("touchstart", e => {
-    document.body.style.userSelect = "none";
-    if (e.touches.length !== 1) return;
+  let touchDraggedSection = null;
+  let isDraggingTouch = false;
+  let longPressTimer = null;
 
-    touchStartY = e.touches[0].clientY;
+  parent.querySelectorAll(".cv-section").forEach(section => {
 
-    longPressTimer = setTimeout(() => {
-      touchDraggedSection = section;
-      isDraggingTouch = true;
-      section.classList.add("dragging");
-    }, 300); // 🔥 long press süresi
+    section.addEventListener("touchstart", e => {
+      if (e.touches.length !== 1) return;
+
+      document.body.style.userSelect = "none";
+
+      longPressTimer = setTimeout(() => {
+        touchDraggedSection = section;
+        isDraggingTouch = true;
+        section.classList.add("dragging");
+      }, 300);
+    });
+
+    section.addEventListener("touchmove", e => {
+      if (!isDraggingTouch || !touchDraggedSection) return;
+      e.preventDefault();
+    }, { passive: false });
+
+    section.addEventListener("touchend", e => {
+      document.body.style.userSelect = "";
+      clearTimeout(longPressTimer);
+
+      if (!isDraggingTouch || !touchDraggedSection) {
+        isDraggingTouch = false;
+        return;
+      }
+
+      const touch = e.changedTouches[0];
+      const target = document.elementFromPoint(
+        touch.clientX,
+        touch.clientY
+      )?.closest(".cv-section");
+
+      if (target && target !== touchDraggedSection) {
+
+        const placeholder = document.createElement("div");
+
+        parent.insertBefore(placeholder, touchDraggedSection);
+        parent.insertBefore(touchDraggedSection, target);
+        parent.insertBefore(target, placeholder);
+
+        placeholder.remove();
+
+        if (typeof saveSectionOrder === "function") {
+          saveSectionOrder();
+        }
+      }
+
+      touchDraggedSection.classList.remove("dragging");
+      touchDraggedSection = null;
+      isDraggingTouch = false;
+    });
+
   });
 
-  section.addEventListener("touchmove", e => {
-    if (!isDraggingTouch || !touchDraggedSection) return;
-
-    e.preventDefault(); // 🔥 scroll’u durdurur
-
-    const touchY = e.touches[0].clientY;
-    const target = document.elementFromPoint(
-      e.touches[0].clientX,
-      touchY
-    )?.closest(".cv-section");
-
-    if (!target || target === touchDraggedSection) return;
-
-    // eski çizgileri temizle
-    document.querySelectorAll(".cv-section")
-      .forEach(s => s.classList.remove("drop-active"));
-
-    target.classList.add("drop-active");
-  }, { passive: false });
-
-  section.addEventListener("touchend", e => {
-  document.body.style.userSelect = "";
-  clearTimeout(longPressTimer);
-
-  if (!isDraggingTouch || !touchDraggedSection) {
-    isDraggingTouch = false;
-    return;
-  }
-
-  const touch = e.changedTouches[0];
-  const target = document.elementFromPoint(
-    touch.clientX,
-    touch.clientY
-  )?.closest(".cv-section");
-
-  document.querySelectorAll(".cv-section")
-    .forEach(s => s.classList.remove("drop-active"));
-
-  if (target && target !== touchDraggedSection) {
-    target.before(touchDraggedSection);
-
-    if (typeof saveSectionOrder === "function") {
-      saveSectionOrder();
-    }
-  }
-
-  touchDraggedSection.classList.remove("dragging");
-  touchDraggedSection = null;
-  isDraggingTouch = false;
 });
 
-});
