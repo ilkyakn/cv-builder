@@ -29,6 +29,7 @@ const translations = {
 
   openPreview: "Önizlemeyi Gör",
   closePreview: "← Düzenlemeye Dön",
+  contact: "İletişim Bilgileri",
 },
   en: {
   name: "Full Name",
@@ -59,6 +60,7 @@ const translations = {
 
   openPreview: "View Preview",
   closePreview: "← Back to Edit",
+  contact: "Contact Information",
  } 
 };
 

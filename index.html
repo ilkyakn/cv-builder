@@ -13,85 +13,133 @@
   <!-- ================= SOL FORM ================= -->
   <div class="form">
     <h2 data-i18n="cvInfo">CV Bilgileri</h2>
-    <!-- DİL -->
-    <label for="languageSelect" id="languageLabel">Dil</label>
-    <select id="languageSelect">
-      <option value="tr" selected>Türkçe</option>
-      <option value="en">English</option>
-    </select>
+
+    <!-- CV AYARLARI -->
+<div class="card">
+
+  <div class="card-title" data-i18n="settings">
+    CV Ayarları
+  </div>
+
+  <!-- DİL -->
+  <label for="languageSelect" id="languageLabel">Dil</label>
+  <select id="languageSelect">
+    <option value="tr" selected>Türkçe</option>
+    <option value="en">English</option>
+  </select>
+
+  <!-- FONT -->
+  <label for="fontSelect" data-i18n="font">Yazı Fontu</label>
+  <select id="fontSelect">
+    <option value="Arial">Arial</option>
+    <option value="Georgia">Georgia</option>
+    <option value="Times New Roman">Times New Roman</option>
+    <option value="Courier New">Courier New</option>
+  </select>
+
+  <!-- RENK -->
+  <label for="colorSelect" data-i18n="color">Renk Teması</label>
+  <select id="colorSelect">
+    <option value="mono" selected data-i18n="mono">Siyah - Beyaz</option>
+    <option value="blue" data-i18n="blue">Mavi</option>
+  </select>
+
+</div>
 
     <!-- KİŞİSEL -->
-    <label for="nameInput" data-i18n="name">Ad Soyad</label>
-    <input type="text" id="nameInput">
+    <div class="card">
+  <div class="card-title" data-i18n="personal">Kişisel Bilgiler</div>
 
-    <label for="jobInput" data-i18n="job">Meslek</label>
-    <input type="text" id="jobInput">
+  <label for="nameInput" data-i18n="name">Ad Soyad</label>
+  <input type="text" id="nameInput">
+
+  <label for="jobInput" data-i18n="job">Meslek</label>
+  <input type="text" id="jobInput">
+</div>  
 
     <!-- İLETİŞİM -->
-    <label class="checkbox">
-  <input type="checkbox" id="toggleContact" checked>
-  <span data-i18n="showContact">İletişim bilgilerini göster</span>
-</label>
+<div class="card">
 
+  <div class="card-title" data-i18n="contact">
+    İletişim Bilgileri
+  </div>
 
-    <label for="phoneInput" data-i18n="phone">Telefon</label>
-    <input type="text" id="phoneInput">
+  <label class="checkbox">
+    <input type="checkbox" id="toggleContact" checked>
+    <span data-i18n="showContact">İletişim bilgilerini göster</span>
+  </label>
 
-    <label for="addressInput" data-i18n="address">Adres</label>
-    <input type="text" id="addressInput">
+  <label for="phoneInput" data-i18n="phone">Telefon</label>
+  <input type="text" id="phoneInput">
+
+  <label for="addressInput" data-i18n="address">Adres</label>
+  <input type="text" id="addressInput">
+
+</div>
 
     <!-- HAKKINDA -->
-     <h4 data-i18n="about">Hakkımda</h4>
-    <label class="checkbox">
-  <input type="checkbox" id="toggleAbout" checked>
-  <span data-i18n="showAbout">Hakkımda bölümünü göster</span>
-</label>
+<div class="card">
 
-    <textarea id="aboutInput"></textarea>
+  <div class="card-title" data-i18n="about">
+    Hakkımda
+  </div>
+
+  <label class="checkbox">
+    <input type="checkbox" id="toggleAbout" checked>
+    <span data-i18n="showAbout">Hakkımda bölümünü göster</span>
+  </label>
+
+  <textarea id="aboutInput"></textarea>
+
+</div>
 
     <!-- EĞİTİM -->
-     <h4 data-i18n="education">Eğitim</h4>
+<div class="card">
 
-    <label class="checkbox">
-  <input type="checkbox" id="toggleEducation" checked>
-  <span data-i18n="showEducation">Eğitim bölümünü göster</span>
-</label>
-    <textarea id="educationInput"></textarea>
+  <div class="card-title" data-i18n="education">
+    Eğitim
+  </div>
+
+  <label class="checkbox">
+    <input type="checkbox" id="toggleEducation" checked>
+    <span data-i18n="showEducation">Eğitim bölümünü göster</span>
+  </label>
+
+  <textarea id="educationInput"></textarea>
+
+</div>
 
     <!-- REFERANS -->
-     <h4 data-i18n="reference">Referans</h4>
+<div class="card">
 
-    <label class="checkbox">
-  <input type="checkbox" id="toggleReference" checked>
-  <span data-i18n="showReference">Referans bölümünü göster</span>
-</label>
-    <textarea id="referenceInput"></textarea>
+  <div class="card-title" data-i18n="reference">
+    Referans
+  </div>
 
-    <!-- FOTO -->
-    <label for="photoInput" data-i18n="photo">Fotoğraf</label>
-    <input type="file" id="photoInput" accept="image/*">
+  <label class="checkbox">
+    <input type="checkbox" id="toggleReference" checked>
+    <span data-i18n="showReference">Referans bölümünü göster</span>
+  </label>
 
-    <label class="checkbox">
-  <input type="checkbox" id="photoToggle" checked>
-  <span data-i18n="showPhoto">Fotoğrafı CV'de göster</span>
-</label>
+  <textarea id="referenceInput"></textarea>
 
+</div>
 
-    <!-- FONT -->
-    <label for="fontSelect" data-i18n="font">Yazı Fontu</label>
-    <select id="fontSelect">
-      <option value="Arial">Arial</option>
-      <option value="Georgia">Georgia</option>
-      <option value="Times New Roman">Times New Roman</option>
-      <option value="Courier New">Courier New</option>
-    </select>
+  <!-- FOTOĞRAF -->
+<div class="card">
 
-    <!-- RENK -->
-    <label for="colorSelect" data-i18n="color">Renk Teması</label>
-    <select id="colorSelect">
-      <option value="mono" selected data-i18n="mono">Siyah - Beyaz</option>
-      <option value="blue" data-i18n="blue">Mavi</option>
-    </select>
+  <div class="card-title" data-i18n="photo">
+    Fotoğraf
+  </div>
+
+  <input type="file" id="photoInput" accept="image/*">
+
+  <label class="checkbox">
+    <input type="checkbox" id="photoToggle" checked>
+    <span data-i18n="showPhoto">Fotoğrafı CV'de göster</span>
+  </label>
+
+</div>
 
     <!-- PROGRESS -->
     <label data-i18n="progressTitle">CV Doluluk Durumu</label>
