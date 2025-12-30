@@ -586,12 +586,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!draggedSection || draggedSection === section) return;
 
-  parent.insertBefore(draggedSection, section.nextSibling);
+  const rect = section.getBoundingClientRect();
+  const middleY = rect.top + rect.height / 2;
 
-  // 🧹 çizgiyi temizle
+  if (e.clientY < middleY) {
+    // üst yarıya bırakıldı → üstüne koy
+    parent.insertBefore(draggedSection, section);
+  } else {
+    // alt yarıya bırakıldı → altına koy
+    parent.insertBefore(draggedSection, section.nextSibling);
+  }
+
   parent
     .querySelectorAll(".cv-section")
     .forEach(s => s.classList.remove("drop-active"));
+
+  saveSectionOrder();
 });
 
     section.addEventListener("dragend", () => {
@@ -613,12 +623,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 let touchDraggedSection = null;
 let touchStartY = 0;
-let longPressTimer = null;
 let isDraggingTouch = false;
 
 document.querySelectorAll(".cv-section").forEach(section => {
 
   section.addEventListener("touchstart", e => {
+    document.body.style.userSelect = "none";
     if (e.touches.length !== 1) return;
 
     touchStartY = e.touches[0].clientY;
@@ -651,6 +661,7 @@ document.querySelectorAll(".cv-section").forEach(section => {
   }, { passive: false });
 
   section.addEventListener("touchend", e => {
+    document.body.style.userSelect = "";
     clearTimeout(longPressTimer);
 
     if (!isDraggingTouch || !touchDraggedSection) {

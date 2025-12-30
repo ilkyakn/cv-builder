@@ -618,3 +618,13 @@ label.checkbox {
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
 }
 
+/* ================= MOBILE DRAG SELECTION FIX ================= */
+
+@media (hover: none) {
+  .cv-section {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+
