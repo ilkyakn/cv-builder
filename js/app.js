@@ -27,10 +27,12 @@ const translations = {
   progressLow: "CV eksik görünüyor",
   progressMid: "CV neredeyse hazır",
   progressFull: "CV başvuruya hazır",
-
+  settings: "Ayarlar",
   openPreview: "Önizlemeyi Gör",
   closePreview: "← Düzenlemeye Dön",
   contact: "İletişim Bilgileri",
+  personal: "Kişisel Bilgiler",
+  uploadPhoto: "Fotoğraf Yükle",
 },
   en: {
   name: "Full Name",
@@ -58,10 +60,12 @@ const translations = {
   progressLow: "CV looks incomplete",
   progressMid: "CV is almost ready",
   progressFull: "CV is ready to apply",
-
+  settings: "Settings",
   openPreview: "View Preview",
   closePreview: "← Back to Edit",
   contact: "Contact Information",
+  personal: "Personal Information",
+  uploadPhoto: "Upload Photo",
  } 
 };
 

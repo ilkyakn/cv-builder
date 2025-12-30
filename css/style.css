@@ -698,3 +698,84 @@ label.checkbox {
   }
 }
 
+/* ===============================
+   SWITCH (MEVCUT CHECKBOX'TAN)
+   =============================== */
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Yazı */
+.checkbox span {
+  flex: 1;
+  font-size: 14px;
+}
+
+/* Gerçek checkbox gizli */
+.checkbox input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 42px;
+  height: 22px;
+  background-color: #e8f0ff; /* kapalı: form arka planı */
+  border-radius: 999px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Switch knob */
+.checkbox input[type="checkbox"]::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+/* AÇIK HAL */
+.checkbox input[type="checkbox"]:checked {
+  background-color: #3a8dff; /* site mavisi */
+}
+
+.checkbox input[type="checkbox"]:checked::before {
+  transform: translateX(20px);
+}
+
+.form-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 24px 0 12px;
+}
+
+/* ===============================
+   CUSTOM FILE UPLOAD BUTTON
+   =============================== */
+
+.upload-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  background-color: #3a8dff;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.upload-btn:hover {
+  background-color: #2f78e6;
+}
