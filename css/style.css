@@ -171,8 +171,8 @@ body {
 }
 
 #previewPhoto {
-  width: 100px;
-  height: 100px;
+  width: 12x;
+  height: 120pt;
   object-fit: contain;
   display: block;
 }
@@ -993,8 +993,8 @@ body.preview-open .preview {
 /* Normal + PDF */
 #previewPhoto,
 .preview.pdf #previewPhoto {
-  width: 100px !important;
-  height: 100px !important;
+  width: 140px !important;
+  height: 140px !important;
   object-fit: contain !important;
   border-radius: 0 !important;
 }
