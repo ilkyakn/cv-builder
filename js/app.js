@@ -488,6 +488,11 @@ function willExceedOnePage(sourceEl) {
 downloadPdfBtn.addEventListener("click", () => {
   const cvEl = document.getElementById("cv");
   const clone = cvEl.cloneNode(true);
+  // === PDF FIX: iOS SVG PHOTO BUG ===
+const img = clone.querySelector("#previewPhoto");
+if (img && img.src.endsWith(".svg")) {
+  img.remove();
+}
 
   clone.classList.add("pdf");
 
