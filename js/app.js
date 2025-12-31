@@ -719,22 +719,37 @@ document.querySelectorAll(".help-icon").forEach(icon => {
   if (!tooltip) return;
 
   icon.addEventListener("click", (e) => {
-    e.stopPropagation(); // document click'e gitmesin
-    tooltip.classList.toggle("active");
+    e.stopPropagation();
+
+    const isOpen = tooltip.classList.contains("active");
+
+    // 🔥 önce TÜM tooltipleri kapat
+    document
+      .querySelectorAll(".help-tooltip.active")
+      .forEach(t => t.classList.remove("active"));
+
+    // 🔥 eğer zaten açık değilse, aç
+    if (!isOpen) {
+      tooltip.classList.add("active");
+    }
   });
 
   icon.addEventListener("touchstart", (e) => {
-    e.stopPropagation(); // mobil için
-    tooltip.classList.toggle("active");
+    e.stopPropagation();
+
+    const isOpen = tooltip.classList.contains("active");
+
+    document
+      .querySelectorAll(".help-tooltip.active")
+      .forEach(t => t.classList.remove("active"));
+
+    if (!isOpen) {
+      tooltip.classList.add("active");
+    }
   });
 
-  tooltip.addEventListener("click", (e) => {
-    e.stopPropagation();
-  });
-
-  tooltip.addEventListener("touchstart", (e) => {
-    e.stopPropagation();
-  });
+  tooltip.addEventListener("click", (e) => e.stopPropagation());
+  tooltip.addEventListener("touchstart", (e) => e.stopPropagation());
 });
 
 document.addEventListener("touchstart", (e) => {
