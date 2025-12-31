@@ -488,10 +488,16 @@ function willExceedOnePage(sourceEl) {
 downloadPdfBtn.addEventListener("click", () => {
   const cvEl = document.getElementById("cv");
   const clone = cvEl.cloneNode(true);
+  // === PDF IMAGE FIX (iOS + Desktop SAFE) ===
+const originalImg = cvEl.querySelector("#previewPhoto");
+const clonedImg = clone.querySelector("#previewPhoto");
+
+if (originalImg && clonedImg && originalImg.src.startsWith("data:image")) {
+  clonedImg.src = originalImg.src;
+}
   // === PDF FIX: iOS SVG PHOTO BUG ===
 const img = clone.querySelector("#previewPhoto");
 if (img && img.src.endsWith(".svg")) {
-  img.remove();
 }
 
   clone.classList.add("pdf");
