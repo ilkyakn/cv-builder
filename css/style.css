@@ -175,6 +175,7 @@ body {
   height: 100px;
   object-fit: cover;
   border-radius: 50%;
+  display: block;
 }
 
 /* PDF (mobil html2canvas fix) */
@@ -992,4 +993,19 @@ body.preview-open .preview {
   width: 100px;
   height: 100px;
   object-fit: contain;
+}
+
+/* =========================
+   MOBILE PDF PHOTO FIX (IOS)
+   ========================= */
+@media print {
+  #previewPhoto {
+    object-fit: contain !important;
+    border-radius: 0 !important;
+  }
+
+  .header {
+    overflow: visible !important;
+    transform: none !important;
+  }
 }
