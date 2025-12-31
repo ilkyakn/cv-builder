@@ -488,8 +488,13 @@ function willExceedOnePage(sourceEl) {
 downloadPdfBtn.addEventListener("click", () => {
   const cvEl = document.getElementById("cv");
   const clone = cvEl.cloneNode(true);
+  clone.style.position = "absolute";
+  clone.style.left = "-9999px";
+  clone.style.top = "0";
+  document.body.appendChild(clone);
+
   clone.classList.add("pdf");
-  
+
   clone.style.opacity = "1";
   clone.style.animation = "none";
 
@@ -592,6 +597,9 @@ if (header) {
       }
     })
     .save();
+    setTimeout(() => {
+  clone.remove();
+}, 100);
 });
 
 /* ================= INIT ================= */
