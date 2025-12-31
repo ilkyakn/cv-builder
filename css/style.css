@@ -15,14 +15,16 @@ html, body {
   min-height: 100vh;
   font-family: Arial, sans-serif;
 
-  background:
-    radial-gradient(
-      circle at top center,
-      #3a8dff 0%,
-      #1e5bbf 35%,
-      #0b2e6f 70%,
-      #061a3a 100%
-    );
+  background: linear-gradient(
+    -45deg,
+    #5aa2ff,
+    #3a8dff,
+    #1e5bbf,
+    #163f8f
+  );
+
+  background-size: 400% 400%;
+  animation: gradientFlow 20s ease infinite;
 }
 
 
@@ -246,13 +248,20 @@ body {
 #downloadPdfBtn {
   display: block;
   margin: 30px auto;
-  padding: 12px 24px;
+  padding: 12px 26px;
   font-size: 15px;
-  background: #2563eb;
-  color: #fff;
+
+  background: #ffffff;
+  color: #2563eb;               /* sitenin mavisi */
+  border: 2px solid #2563eb;
+
+  border-radius: 12px;
+  font-weight: 600;
 }
 
 #downloadPdfBtn:hover {
+  background: #2563eb;
+  color: #ffffff;
   box-shadow: 0 10px 20px rgba(37, 99, 235, 0.25);
   transform: translateY(-1px);
 }
@@ -263,13 +272,12 @@ body {
 }
 
 #resetBtn {
-  margin-top: 20px;
-  padding: 10px;
+  margin: 10px auto 0;
+  display: block;
+  padding: 10px 18px;
   background: #ef4444;
   color: #fff;
-  position: relative;
-  top: -95px;
-} 
+}
 
 #resetBtn:hover {
   box-shadow: 0 8px 16px rgba(239, 68, 68, 0.25);
@@ -422,11 +430,6 @@ label.checkbox {
     transform 0.2s ease;
 }
 
-.card:hover {
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
-  transform: translateY(-1px);
-}
-
 .card-title {
   margin: 0 0 12px;
   font-size: 16px;
@@ -434,177 +437,11 @@ label.checkbox {
   color: #111827;
 }
 
-/* ================= DRAG HINT ================= */
-
-.cv-section {
-  cursor: grab;
-  position: relative;
-}
-
-.cv-section:hover {
-  outline: 2px dashed #93c5fd;
-  outline-offset: 6px;
-}
-
-.cv-section:active {
-  cursor: grabbing;
-}
-
-/* ================= DRAG TOOLTIP ================= */
-
-.drag-hint {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: #1e40af;
-  color: #fff;
-  font-size: 13px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-  z-index: 10;
-  opacity: 0;
-  transform: translateY(-4px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.drag-hint.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ================= DROP LINE (BOTTOM ONLY) ================= */
-
-.cv-section {
-  position: relative;
-}
-
-/* ================= DROP LINE (ANIMATED) ================= */
-
-.cv-section {
-  position: relative;
-}
-
-.cv-section::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 2px;
-  background: #2563eb;
-
-  /* başlangıç durumu */
-  opacity: 0;
-  transform: scaleX(0);
-  transform-origin: left;
-
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
-}
-
-.cv-section.drop-active::after {
-  opacity: 1;
-  transform: scaleX(1);
-}
-
-/* ================= HELP ICON (ROUND + HOVER) ================= */
-
-.help-icon {
-  width: 24px;
-  height: 24px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 14px;
-  font-weight: 700;
-
-  border-radius: 9999px;   /* TAM YUVARLAK */
-  background: #2563eb;
-  color: #ffffff;
-
-  cursor: help;
-  user-select: none;
-
-  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.35);
-
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
-}
-
-/* HOVER / FOCUS EFEKTİ */
-.help-icon:hover,
-.help-icon:focus {
-  transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.45);
-}
-
-
-/* PDF'te görünmesin */
-.preview.pdf .help-icon,
-.preview.pdf .help-tooltip {
-  display: none;
-}
-
 /* ================= HEADER HELP (AD SOYAD HİZASI) ================= */
 
 .header {
   align-items: flex-start; /* referans */
 }
-
-.header-help {
-  margin-left: auto;
-  padding-top: 0px;   /* 🔥 bir tık yukarı */
-  position: relative;
-}
-
-/* PDF'te görünmesin */
-.preview.pdf .header-help {
-  display: none;
-}
-
-/* ================= HELP TOOLTIP (ANIMATED & POSITIONED) ================= */
-
-.help-tooltip {
-  position: absolute;
-  top: 50%;
-  right: 120%;
-
-  transform: translateY(-50%) translateX(6px) scale(0.95);
-
-  background: #1e40af;
-  color: #ffffff;
-  font-size: 13px;
-  padding: 8px 10px;
-  border-radius: 8px;
-
-  width: max-content;
-  max-width: 220px;
-
-  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-
-  opacity: 0;
-  pointer-events: none;
-
-  transition:
-    opacity 0.2s ease,
-    transform 0.25s ease;
-
-  z-index: 50;
-}
-
-/* Hover / Focus ile aç */
-.help-icon:hover + .help-tooltip,
-.help-icon:focus + .help-tooltip {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(-50%) translateX(0) scale(1);
-}
-
 /* ================= PDF HIDE ================= */
 
 @media print {
@@ -613,38 +450,7 @@ label.checkbox {
   }
 }
 
-/* ================= MOBILE DRAG FEEDBACK ================= */
-
-.cv-section.dragging {
-  opacity: 0.6;
-  transform: scale(1.02);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-/* ================= CURSOR FIX (VISIBLE ALWAYS) ================= */
-
-.cv-section {
-  cursor: pointer; /* görünür garanti */
-}
-
-.cv-section:active {
-  cursor: grabbing;
-}
-
-.cv-section:hover {
-  background-color: #f0f6ff;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
-}
-
 /* ================= MOBILE DRAG SELECTION FIX ================= */
-
-@media (hover: none) {
-  .cv-section {
-    -webkit-user-select: none;
-    user-select: none;
-  }
-}
 
 .form,
 .preview {
@@ -778,4 +584,185 @@ label.checkbox {
 
 .upload-btn:hover {
   background-color: #2f78e6;
+}
+
+/* ===============================
+   CV SECTION GRID (CONTROL GUTTER)
+   =============================== */
+
+.cv-section-grid {
+  display: grid;
+  grid-template-columns: 1fr 56px; /* içerik | ok kolonu */
+  gap: 8px;
+  align-items: stretch;
+}
+
+.cv-section-content {
+  min-width: 0; /* uzun metinler taşmasın */
+}
+
+.cv-section-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===============================
+   SECTION REORDER ARROWS
+   =============================== */
+
+.section-arrow {
+  all: unset;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 6px;
+  color: #2563eb; /* sitenin mavisi */
+}
+
+.cv-section-controls {
+  display: flex;
+  gap: 4px;
+}
+
+.section-arrow.disabled {
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+/* ===============================
+   CHEVRON ICONS (REORDER)
+   =============================== */
+
+.section-arrow {
+  all: unset;
+  cursor: pointer;
+  padding: 6px;
+  color: #2563eb; /* sitenin mavisi */
+}
+
+.chevron-icon {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+.section-arrow.disabled {
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+/* ===============================
+   REORDER SMOOTH ANIMATION
+   =============================== */
+
+.cv-section {
+  transition:
+    transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* =========================
+   SADECE PDF / PRINT
+   ========================= */
+@media print {
+  .pdf-hide,
+  .cv-section-controls {
+    display: none !important;
+  }
+}
+
+.pdf-actions {
+  text-align: center;
+  margin-top: 24px;
+}
+
+/* ===============================
+   MODERN SELECT (LANGUAGE)
+   =============================== */
+
+.form select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background-color: #ffffff;
+  border: 2px solid #dbeafe;
+  border-radius: 14px;
+
+  padding: 12px 44px 12px 14px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #111827;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* Hover */
+.form select:hover {
+  border-color: #2563eb;
+}
+
+/* Focus */
+.form select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+/* Custom arrow */
+.form select {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='none' stroke='%232563eb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 8 10 12 14 8'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 18px;
+}
+
+#languageSelect {
+  background-color: #f8fbff;
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ===== INTRO BAR ===== */
+.intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* Sol başlık alanı */
+.intro-left {
+  max-width: 70%;
+}
+
+/* Sağ butonlar */
+.intro-right {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Butonlar */
+.intro-right button {
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
 }

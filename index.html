@@ -8,10 +8,20 @@
 </head>
 <body>
   <div class="intro">
-  <h1>CV’ni dakikalar içinde oluştur</h1>
-  <p>Gerçek zamanlı önizleme, tek sayfa, profesyonel çıktı.</p>
-</div>
+  <div class="intro-left">
+    <h1 data-i18n="heroTitle">CV’ni dakikalar içinde oluştur</h1>
+    <p data-i18n="heroSubtitle">
+      Gerçek zamanlı önizleme, tek sayfa, profesyonel çıktı.
+    </p>
+  </div>
 
+  <div class="intro-right pdf-actions">
+    <button id="resetBtn" class="pdf-hide" data-i18n="reset">Sıfırla</button>
+    <button id="downloadPdfBtn" class="pdf-hide" data-i18n="download">
+      PDF olarak indir
+    </button>
+  </div>
+</div>
 <div class="container">
 
   <!-- ================= SOL FORM ================= -->
@@ -165,9 +175,6 @@
 
   <!-- ================= SAĞ ÖNİZLEME ================= -->
   <div class="preview mono" id="cv">
-    <div id="dragHint" class="drag-hint">
-  CV bölümlerini sürükleyerek sıralayabilirsin
-</div>
 
     <button id="closePreviewBtn" class="mobile-only" data-i18n="closePreview">
      ← Düzenlemeye Dön
@@ -180,44 +187,105 @@
     <h1 id="previewName">Ad Soyad</h1>
     <h3 id="previewJob">Meslek</h3>
   </div>
+</div>
 
-  <!-- AD SOYAD HİZASINDA SAĞ TARAF YARDIM İKONU -->
-  <div class="header-help no-print">
-    <span class="help-icon" tabindex="0">?</span>
-    <div class="help-tooltip">
-      CV bölümlerinin yerini sürükleyerek değiştirebilirsin
+    <!-- İLETİŞİM ÖNİZLEME -->
+    <div id="contactSection" class="cv-section" data-section="contact">
+      <div class="cv-section-grid">
+    <div class="cv-section-content">
+    <p><strong><span data-i18n="phone">Telefon</span>:</strong> <span id="previewPhone">-</span></p>
+      <p><strong><span data-i18n="address">Adres</span>:</strong> <span id="previewAddress">-</span></p>
+    </div>
+
+     <div class="cv-section-controls">
+      <button class="section-arrow up" aria-label="Yukarı taşı">
+  <svg class="chevron-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M6 14l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+      <button class="section-arrow down" aria-label="Aşağı taşı">
+  <svg class="chevron-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M6 10l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
     </div>
   </div>
 </div>
 
-    <!-- İLETİŞİM ÖNİZLEME -->
-    <div id="contactSection" class="cv-section" draggable="true" data-section="contact">
-      <p><strong><span data-i18n="phone">Telefon</span>:</strong> <span id="previewPhone">-</span></p>
-      <p><strong><span data-i18n="address">Adres</span>:</strong> <span id="previewAddress">-</span></p>
-    </div>
+    <div id="aboutSection" class="cv-section" data-section="about">
+  <div class="cv-section-grid">
 
-    <div id="aboutSection" class="cv-section" draggable="true" data-section="about">
+    <div class="cv-section-content">
       <h4 data-i18n="about">Hakkımda</h4>
       <p id="previewAbout">-</p>
     </div>
 
-    <div id="educationSection" class="cv-section" draggable="true" data-section="education">
+    <div class="cv-section-controls">
+      <button class="section-arrow up" aria-label="Yukarı taşı">
+  <svg class="chevron-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M6 14l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+      <button class="section-arrow down" aria-label="Aşağı taşı">
+  <svg class="chevron-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M6 10l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+    </div>
+
+  </div>
+</div>
+
+   <div id="educationSection" class="cv-section" data-section="education">
+  <div class="cv-section-grid">
+
+    <div class="cv-section-content">
       <h4 data-i18n="education">Eğitim</h4>
       <p id="previewEducation">-</p>
     </div>
 
-    <div id="referenceSection" class="cv-section" draggable="true" data-section="reference">
+    <div class="cv-section-controls">
+      <button class="section-arrow up" aria-label="Yukarı taşı">
+  <svg class="chevron-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M6 14l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+      <button class="section-arrow down" aria-label="Aşağı taşı">
+  <svg class="chevron-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M6 10l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+    </div>
+
+  </div>
+</div> 
+
+    <div id="referenceSection" class="cv-section" data-section="reference">
+  <div class="cv-section-grid">
+
+    <div class="cv-section-content">
       <h4 data-i18n="reference">Referans</h4>
       <p id="previewReference">-</p>
     </div>
 
+    <div class="cv-section-controls">
+      <button class="section-arrow up" aria-label="Yukarı taşı">
+  <svg class="chevron-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M6 14l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+      <button class="section-arrow down" aria-label="Aşağı taşı">
+  <svg class="chevron-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M6 10l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+    </div>
+
   </div>
+  </div> <!-- preview -->
+</div> <!-- container -->
 
-</div>
-
-<!-- PDF -->
-<button id="downloadPdfBtn" data-i18n="download">PDF olarak indir</button>
-<button id="resetBtn" data-i18n="reset">Sıfırla</button>
+<!-- PDF BUTONLARI (CV DIŞINDA) -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="js/app.js"></script>

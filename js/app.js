@@ -33,6 +33,15 @@ const translations = {
   contact: "İletişim Bilgileri",
   personal: "Kişisel Bilgiler",
   uploadPhoto: "Fotoğraf Yükle",
+  dragSections: "CV bölümlerinin yerini sürükleyerek değiştirebilirsin",
+  emptyNameConfirm:
+  "Ad Soyad alanı boş.\nCV isimsiz olarak oluşturulacak.\n\nDevam etmek istiyor musun?",
+  onePageWarning:
+  "CV tek sayfayı aşabilir.\nCV'ler genellikle tek sayfa olur.\n\nYine de devam etmek istiyor musun?",
+  resetConfirm: "Tüm CV sıfırlanacak.\nEmin misin?",
+  heroTitle: "CV’ni dakikalar içinde oluştur",
+  heroSubtitle: "Gerçek zamanlı önizleme, tek sayfa, profesyonel çıktı.",
+
 },
   en: {
   name: "Full Name",
@@ -66,6 +75,14 @@ const translations = {
   contact: "Contact Information",
   personal: "Personal Information",
   uploadPhoto: "Upload Photo",
+  dragSections: "You can rearrange CV sections by dragging them",
+  emptyNameConfirm:
+  "Full Name field is empty.\nThe CV will be generated without a name.\n\nDo you want to continue?",
+  onePageWarning:
+  "The CV may exceed one page.\nCVs are usually one page long.\n\nDo you want to continue?",
+  resetConfirm: "All CV data will be reset.\nAre you sure?",
+  heroTitle: "Create your CV in minutes",
+  heroSubtitle: "Real-time preview, single page, professional output.",
  } 
 };
 
@@ -90,6 +107,7 @@ const toggleReference = get("toggleReference");
 const toggleContact = get("toggleContact");
 
 /* ================= PREVIEW ================= */
+const SECTION_ORDER_KEY = "cv-section-order";
 const previewName = get("previewName");
 const previewJob = get("previewJob");
 const previewPhone = get("previewPhone");
@@ -159,11 +177,11 @@ photoInput.addEventListener("change", () => {
 });
 
 photoToggle.addEventListener("change", () => {
-const shouldShowPhoto =
-  d.photoToggle !== false && d.photo && d.photo.startsWith("data:image");
-
-previewPhoto.style.display = shouldShowPhoto ? "block" : "none";
-previewPhoto.src = shouldShowPhoto ? d.photo : DEFAULT_AVATAR;
+  if (photoToggle.checked) {
+    previewPhoto.style.display = "block";
+  } else {
+    previewPhoto.style.display = "none";
+  }
   saveToStorage();
 });
 
@@ -349,15 +367,41 @@ function loadFromStorage() {
   updateProgress();
 }
 
+function saveSectionOrder() {
+  const sections = document.querySelectorAll(".cv-section");
+  const order = [...sections].map(section => section.dataset.section);
+  localStorage.setItem(SECTION_ORDER_KEY, JSON.stringify(order));
+}
+
+function loadSectionOrder() {
+  const raw = localStorage.getItem(SECTION_ORDER_KEY);
+  if (!raw) return;
+
+  const order = JSON.parse(raw);
+  const parent = document.getElementById("cv");
+
+  order.forEach(key => {
+    const section = parent.querySelector(
+      `.cv-section[data-section="${key}"]`
+    );
+    if (section) parent.appendChild(section);
+  });
+}
+
 /* ================= RESET ================= */
 function resetCV() {
   localStorage.removeItem(STORAGE_KEY);
-  localStorage.removeItem("cv-section-order"); // 🔥 sıra reseti
+
+   // localStorage.removeItem("cv-section-order");
   location.reload();
 }
 
 get("resetBtn").addEventListener("click", () => {
-  if (confirm("Tüm CV sıfırlanacak. Emin misin?")) {
+  if (
+  confirm(
+    translations[languageSelect.value].resetConfirm
+  )
+) {
     resetCV();
   }
 });
@@ -419,38 +463,30 @@ downloadPdfBtn.addEventListener("click", () => {
   const cvEl = document.getElementById("cv");
   const clone = cvEl.cloneNode(true);
 
-  /* ================= PDF İÇİN UI TEMİZLE (KESİN) ================= */
-
-// Yardım ikonları ve tooltipler
-clone.querySelectorAll(".header-help").forEach(el => el.remove());
-clone.querySelectorAll(".help-icon").forEach(el => el.remove());
-clone.querySelectorAll(".help-tooltip").forEach(el => el.remove());
-
-// Drag hint (üstteki mavi bilgilendirme)
-clone.querySelectorAll("#dragHint").forEach(el => el.remove());
-
-// Mobil-only butonlar (zaten vardı ama garanti olsun)
-clone.querySelectorAll(".mobile-only").forEach(el => el.remove());
-
+  // PDF'te görünmeyecek UI'ları temizle
+  clone.querySelectorAll(".pdf-hide, .cv-section-controls, .mobile-only")
+    .forEach(el => el.remove());
 
   /* ================= AD SOYAD KONTROL ================= */
   const nameText = nameInput.value.trim();
 
-  if (!nameText) {
-    const proceed = confirm(
-      "Ad Soyad alanı boş.\nCV isimsiz olarak oluşturulacak.\n\nYine de devam etmek istiyor musun?"
-    );
+  if (!nameText) { 
+  const lang = languageSelect.value;
 
-    if (!proceed) return;
-  }
+  const proceed = confirm(
+    translations[lang].emptyNameConfirm
+  );
+
+  if (!proceed) return;
+}
 
     /* ================= TEK SAYFA KONTROL ================= */
   if (willExceedOnePage(clone)) {
-    const proceed = confirm(
-      "CV tek sayfayı aşabilir.\n" +
-      "CV’ler genellikle tek sayfa olur.\n\n" +
-      "Yine de devam etmek istiyor musun?"
-    );
+    const lang = languageSelect.value;
+
+const proceed = confirm(
+  translations[lang].onePageWarning
+);
 
     if (!proceed) return;
   }
@@ -458,13 +494,13 @@ clone.querySelectorAll(".mobile-only").forEach(el => el.remove());
   /* ================= BOŞ ALAN TEMİZLEME ================= */
 
   const cleanupMap = [
-    { input: jobInput, selector: "#previewJob" },
-    { input: phoneInput, selector: "#previewPhone", parent: "p" },
-    { input: addressInput, selector: "#previewAddress", parent: "p" },
-    { input: aboutInput, selector: "#aboutSection" },
-    { input: educationInput, selector: "#educationSection" },
-    { input: referenceInput, selector: "#referenceSection" }
-  ];
+  { input: jobInput, selector: "#previewJob" },
+  { input: phoneInput, selector: "#previewPhone", parent: "p" },
+  { input: addressInput, selector: "#previewAddress", parent: "p" },
+  { input: aboutInput, selector: "#previewAbout", parent: "#aboutSection" },
+  { input: educationInput, selector: "#previewEducation", parent: "#educationSection" },
+  { input: referenceInput, selector: "#previewReference", parent: "#referenceSection" }
+];
 
   cleanupMap.forEach(item => {
   if (!item.input.value.trim()) {
@@ -541,227 +577,56 @@ applyLanguage(languageSelect.value);
 updateLanguageLabel(languageSelect.value);
 updateProgress();
 
-/* ================= DRAG & DROP + STORAGE (STABLE) ================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  const SECTION_ORDER_KEY = "cv-section-order";
-  let draggedSection = null;
-
-  const parent = document.getElementById("cv");
-  if (!parent) return;
-
-  function saveSectionOrder() {
-    const sections = parent.querySelectorAll(".cv-section");
-    const order = [...sections].map(s => s.dataset.section);
-    localStorage.setItem(SECTION_ORDER_KEY, JSON.stringify(order));
-  }
-
-  function loadSectionOrder() {
-    const raw = localStorage.getItem(SECTION_ORDER_KEY);
-    if (!raw) return;
-
-    const order = JSON.parse(raw);
-    order.forEach(key => {
-      const section = parent.querySelector(
-        `.cv-section[data-section="${key}"]`
-      );
-      if (section) parent.appendChild(section);
-    });
-  }
-
-  // 🔹 Önce kayıtlı sırayı yükle
-  loadSectionOrder();
-
-  parent.querySelectorAll(".cv-section").forEach(section => {
-
-    section.addEventListener("dragstart", () => {
-      draggedSection = section;
-      section.style.opacity = "0.4";
-    });
-
-    section.addEventListener("dragover", e => {
-  e.preventDefault();
-
-  // 🔥 Önce TÜM çizgileri söndür
-  parent
-    .querySelectorAll(".cv-section")
-    .forEach(s => s.classList.remove("drop-active"));
-
-  // 🔹 Sadece bu section'ın ALTINA çizgi yak
-  section.classList.add("drop-active");
-});
-
-   section.addEventListener("drop", e => {
-  e.preventDefault();
-
-  if (!draggedSection || draggedSection === section) return;
-
-  const placeholder = document.createElement("div");
-
-  parent.insertBefore(placeholder, draggedSection);
-  parent.insertBefore(draggedSection, section);
-  parent.insertBefore(section, placeholder);
-
-  placeholder.remove();
-
-  parent
-    .querySelectorAll(".cv-section")
-    .forEach(s => s.classList.remove("drop-active"));
-
-  saveSectionOrder();
-});
-
-    section.addEventListener("dragend", () => {
-  draggedSection = null;
-  section.style.opacity = "1";
-
-  parent
-    .querySelectorAll(".cv-section")
-    .forEach(s => s.classList.remove("drop-active"));
-
-  saveSectionOrder();
-});
-
-  });
-
-});
-
-/* ================= MOBILE TOUCH DRAG ================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  const parent = document.getElementById("cv");
-  if (!parent) return;
-
-  let touchDraggedSection = null;
-  let isDraggingTouch = false;
-  let longPressTimer = null;
-
-  parent.querySelectorAll(".cv-section").forEach(section => {
-
-    section.addEventListener("touchstart", e => {
-      if (e.touches.length !== 1) return;
-
-      document.body.style.userSelect = "none";
-
-      longPressTimer = setTimeout(() => {
-        touchDraggedSection = section;
-        isDraggingTouch = true;
-        section.classList.add("dragging");
-      }, 300);
-    });
-
-    section.addEventListener("touchmove", e => {
-      if (!isDraggingTouch || !touchDraggedSection) return;
-      e.preventDefault();
-    }, { passive: false });
-
-    section.addEventListener("touchend", e => {
-      document.body.style.userSelect = "";
-      clearTimeout(longPressTimer);
-
-      if (!isDraggingTouch || !touchDraggedSection) {
-        isDraggingTouch = false;
-        return;
-      }
-
-      const touch = e.changedTouches[0];
-      const target = document.elementFromPoint(
-        touch.clientX,
-        touch.clientY
-      )?.closest(".cv-section");
-
-      if (target && target !== touchDraggedSection) {
-
-        const placeholder = document.createElement("div");
-
-        parent.insertBefore(placeholder, touchDraggedSection);
-        parent.insertBefore(touchDraggedSection, target);
-        parent.insertBefore(target, placeholder);
-
-        placeholder.remove();
-
-        if (typeof saveSectionOrder === "function") {
-          saveSectionOrder();
-        }
-      }
-
-      touchDraggedSection.classList.remove("dragging");
-      touchDraggedSection = null;
-      isDraggingTouch = false;
-    });
-
-  });
-
-});
-
+/* ===============================
+   SECTION MOVE WITH ARROWS (FINAL)
+   =============================== */
 document.addEventListener("click", (e) => {
-  const activeTooltip = document.querySelector(".help-tooltip.active");
-  if (!activeTooltip) return;
+  const upBtn = e.target.closest(".section-arrow.up");
+  const downBtn = e.target.closest(".section-arrow.down");
+  if (!upBtn && !downBtn) return;
 
-  const helpIcon = activeTooltip.previousElementSibling;
+  const section = e.target.closest(".cv-section");
+  if (!section) return;
 
-  // Eğer tıklanan yer:
-  // - tooltip'in kendisi
-  // - soru işareti
-  // değilse → kapat
-  if (
-    !activeTooltip.contains(e.target) &&
-    !helpIcon.contains(e.target)
-  ) {
-    activeTooltip.classList.remove("active");
+  const parent = section.parentElement;
+
+  if (upBtn) {
+    const prev = section.previousElementSibling;
+    if (!prev || !prev.classList.contains("cv-section")) return;
+
+    const firstTop = section.getBoundingClientRect().top;
+    parent.insertBefore(section, prev);
+    const lastTop = section.getBoundingClientRect().top;
+
+    const delta = firstTop - lastTop;
+    section.style.transform = `translateY(${delta}px)`;
+    section.style.transition = "none";
+
+    requestAnimationFrame(() => {
+      section.style.transition = "";
+      section.style.transform = "";
+    });
   }
-});
 
-document.querySelectorAll(".help-icon").forEach(icon => {
-  const tooltip = icon.nextElementSibling;
-  if (!tooltip) return;
+  if (downBtn) {
+    const next = section.nextElementSibling;
+    if (!next || !next.classList.contains("cv-section")) return;
 
-  icon.addEventListener("click", (e) => {
-    e.stopPropagation();
+    const firstTop = next.getBoundingClientRect().top;
+    parent.insertBefore(next, section);
+    const lastTop = next.getBoundingClientRect().top;
 
-    const isOpen = tooltip.classList.contains("active");
+    const delta = firstTop - lastTop;
+    next.style.transform = `translateY(${delta}px)`;
+    next.style.transition = "none";
 
-    // 🔥 önce TÜM tooltipleri kapat
-    document
-      .querySelectorAll(".help-tooltip.active")
-      .forEach(t => t.classList.remove("active"));
-
-    // 🔥 eğer zaten açık değilse, aç
-    if (!isOpen) {
-      tooltip.classList.add("active");
-    }
-  });
-
-  icon.addEventListener("touchstart", (e) => {
-    e.stopPropagation();
-
-    const isOpen = tooltip.classList.contains("active");
-
-    document
-      .querySelectorAll(".help-tooltip.active")
-      .forEach(t => t.classList.remove("active"));
-
-    if (!isOpen) {
-      tooltip.classList.add("active");
-    }
-  });
-
-  tooltip.addEventListener("click", (e) => e.stopPropagation());
-  tooltip.addEventListener("touchstart", (e) => e.stopPropagation());
-});
-
-document.addEventListener("touchstart", (e) => {
-  const activeTooltip = document.querySelector(".help-tooltip.active");
-  if (!activeTooltip) return;
-
-  const helpIcon = activeTooltip.previousElementSibling;
-
-  if (
-    !activeTooltip.contains(e.target) &&
-    !helpIcon.contains(e.target)
-  ) {
-    activeTooltip.classList.remove("active");
+    requestAnimationFrame(() => {
+      next.style.transition = "";
+      next.style.transform = "";
+    });
   }
+
+  updateArrowStates();
+  saveSectionOrder();
 });
+
