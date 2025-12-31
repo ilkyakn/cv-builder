@@ -172,7 +172,9 @@ body {
 
 #previewPhoto {
   width: 100px;
-  height: 100px;
+  height: auto;          /* ⬅️ EN ÖNEMLİ SATIR */
+  aspect-ratio: 1 / 1;   /* ⬅️ kareyi korur */
+  object-fit: contain;
   display: block;
 }
 
@@ -1019,3 +1021,24 @@ body.preview-open .preview {
   }
 }
 
+/* PDF MODE */
+.preview.pdf #previewPhoto {
+  width: 100px !important;
+  height: auto !important;
+  max-height: 100px !important;
+  aspect-ratio: 1 / 1;
+  object-fit: contain !important;
+  border-radius: 0 !important;
+}
+
+/* PRINT / html2pdf */
+@media print {
+  #previewPhoto {
+    width: 100px !important;
+    height: auto !important;
+    max-height: 100px !important;
+    aspect-ratio: 1 / 1;
+    object-fit: contain !important;
+    border-radius: 0 !important;
+  }
+}
