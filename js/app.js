@@ -494,9 +494,23 @@ downloadPdfBtn.addEventListener("click", () => {
 const originalImg = cvEl.querySelector("#previewPhoto");
 const clonedImg = clone.querySelector("#previewPhoto");
 
-if (originalImg && clonedImg && originalImg.src.startsWith("data:image")) {
-  clonedImg.src = originalImg.src;
+if (originalImg && clonedImg) {
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.src = originalImg.src;
+
+  img.onload = () => {
+    const canvas = document.createElement("canvas");
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+
+    clonedImg.src = canvas.toDataURL("image/png");
+  };
 }
+
   // === PDF FIX: iOS SVG PHOTO BUG ===
 const img = clone.querySelector("#previewPhoto");
 if (img && img.src.endsWith(".svg")) {
