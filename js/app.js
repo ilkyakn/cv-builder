@@ -95,6 +95,7 @@ const aboutInput = get("aboutInput");
 const educationInput = get("educationInput");
 const referenceInput = get("referenceInput");
 const photoInput = get("photoInput");
+const uploadPhotoLabel = document.querySelector(".upload-btn span");
 const photoToggle = get("photoToggle");
 const fontSelect = get("fontSelect");
 const colorSelect = get("colorSelect");
@@ -142,11 +143,21 @@ function bindInput(input, preview, i18nKey, defaultDash = false) {
   input.addEventListener("input", () => {
     if (input.value.trim()) {
       preview.textContent = input.value;
+
+      // 👇 SADECE AD / MESLEK İÇİN
+      if (preview.id === "previewName" || preview.id === "previewJob") {
+        preview.classList.add("is-filled");
+      }
+
     } else {
       const lang = languageSelect.value;
       preview.textContent = defaultDash
         ? "-"
         : translations[lang][i18nKey];
+
+      if (preview.id === "previewName" || preview.id === "previewJob") {
+        preview.classList.remove("is-filled");
+      }
     }
 
     updateProgress();
@@ -171,6 +182,13 @@ photoInput.addEventListener("change", () => {
   const reader = new FileReader();
   reader.onload = () => {
     previewPhoto.src = reader.result;
+
+    // 👇 BUTON METNİ DEĞİŞSİN
+    uploadPhotoLabel.textContent =
+      languageSelect.value === "en"
+        ? "Change Photo"
+        : "Fotoğraf Değiştir";
+
     saveToStorage();
   };
   reader.readAsDataURL(file);
@@ -365,6 +383,14 @@ function loadFromStorage() {
   syncSection(toggleReference, referenceSection, referenceInput);
 
   updateProgress();
+
+  if (previewPhoto.src && previewPhoto.src !== DEFAULT_AVATAR) {
+  uploadPhotoLabel.textContent =
+    languageSelect.value === "en"
+      ? "Change Photo"
+      : "Fotoğraf Değiştir";
+}
+
 }
 
 function saveSectionOrder() {
@@ -629,4 +655,28 @@ document.addEventListener("click", (e) => {
   updateArrowStates();
   saveSectionOrder();
 });
+
+function updateHelpPosition() {
+  const help = document.querySelector(".preview-help");
+  if (!help) return;
+
+  const name = previewName.getBoundingClientRect();
+  const job = previewJob.getBoundingClientRect();
+  const helpBox = help.getBoundingClientRect();
+
+  // Eğer isim veya meslek yardım ikonuna çok yaklaşırsa
+  const overlap =
+    name.right > helpBox.left - 12 ||
+    job.right > helpBox.left - 12;
+
+  help.classList.toggle("shift-right", overlap);
+}
+
+// İsim veya meslek değiştikçe kontrol et
+[nameInput, jobInput].forEach(input => {
+  input.addEventListener("input", updateHelpPosition);
+});
+
+// İlk yüklemede de kontrol
+window.addEventListener("load", updateHelpPosition);
 
