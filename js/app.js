@@ -488,6 +488,9 @@ function willExceedOnePage(sourceEl) {
 downloadPdfBtn.addEventListener("click", () => {
   const cvEl = document.getElementById("cv");
   const clone = cvEl.cloneNode(true);
+  
+  clone.style.opacity = "1";
+  clone.style.animation = "none";
 
   // PDF'te görünmeyecek UI'ları temizle
   clone.querySelectorAll(".pdf-hide, .cv-section-controls, .mobile-only")
@@ -679,4 +682,3 @@ function updateHelpPosition() {
 
 // İlk yüklemede de kontrol
 window.addEventListener("load", updateHelpPosition);
-
