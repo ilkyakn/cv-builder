@@ -695,3 +695,35 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+
+document.addEventListener("click", (e) => {
+  const activeTooltip = document.querySelector(".help-tooltip.active");
+  if (!activeTooltip) return;
+
+  const helpIcon = activeTooltip.previousElementSibling;
+
+  // Eğer tıklanan yer:
+  // - tooltip'in kendisi
+  // - soru işareti
+  // değilse → kapat
+  if (
+    !activeTooltip.contains(e.target) &&
+    !helpIcon.contains(e.target)
+  ) {
+    activeTooltip.classList.remove("active");
+  }
+});
+
+document.addEventListener("touchstart", (e) => {
+  const activeTooltip = document.querySelector(".help-tooltip.active");
+  if (!activeTooltip) return;
+
+  const helpIcon = activeTooltip.previousElementSibling;
+
+  if (
+    !activeTooltip.contains(e.target) &&
+    !helpIcon.contains(e.target)
+  ) {
+    activeTooltip.classList.remove("active");
+  }
+});
