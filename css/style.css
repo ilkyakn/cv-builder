@@ -138,7 +138,6 @@ body {
   background: #e5e7eb;
   height: 10px;
   border-radius: 6px;
-  overflow: hidden;
 }
 
 #progressBar {
@@ -981,4 +980,16 @@ body.preview-open .preview {
 .upload-btn:focus-within {
   outline: none;
   box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.25);
+}
+
+/* PDF mobile image fix */
+.preview.pdf .header {
+  overflow: visible !important;
+}
+
+.preview.pdf #previewPhoto {
+  display: block;
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
 }
