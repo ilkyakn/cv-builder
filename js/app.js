@@ -714,6 +714,29 @@ document.addEventListener("click", (e) => {
   }
 });
 
+document.querySelectorAll(".help-icon").forEach(icon => {
+  const tooltip = icon.nextElementSibling;
+  if (!tooltip) return;
+
+  icon.addEventListener("click", (e) => {
+    e.stopPropagation(); // document click'e gitmesin
+    tooltip.classList.toggle("active");
+  });
+
+  icon.addEventListener("touchstart", (e) => {
+    e.stopPropagation(); // mobil için
+    tooltip.classList.toggle("active");
+  });
+
+  tooltip.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+
+  tooltip.addEventListener("touchstart", (e) => {
+    e.stopPropagation();
+  });
+});
+
 document.addEventListener("touchstart", (e) => {
   const activeTooltip = document.querySelector(".help-tooltip.active");
   if (!activeTooltip) return;
