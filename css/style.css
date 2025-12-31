@@ -178,6 +178,12 @@ body {
   border-radius: 50%;
 }
 
+/* PDF (mobil html2canvas fix) */
+.preview.pdf #previewPhoto {
+  border-radius: 0 !important;
+  object-fit: contain !important;
+}
+
 /* =========================
    TEXT
    ========================= */

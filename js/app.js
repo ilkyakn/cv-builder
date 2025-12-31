@@ -488,6 +488,7 @@ function willExceedOnePage(sourceEl) {
 downloadPdfBtn.addEventListener("click", () => {
   const cvEl = document.getElementById("cv");
   const clone = cvEl.cloneNode(true);
+  clone.classList.add("pdf");
   
   clone.style.opacity = "1";
   clone.style.animation = "none";
