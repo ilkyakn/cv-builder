@@ -1,4 +1,4 @@
-const DEFAULT_AVATAR = "assets/default-avatar.svg";
+const DEFAULT_AVATAR = "assets/default-avatar.png";
 const get = id => document.getElementById(id);
 const translations = {
   tr: {
@@ -485,35 +485,32 @@ function willExceedOnePage(sourceEl) {
 }
 
 /* ================= PDF ================= */
-downloadPdfBtn.addEventListener("click", () => {
+downloadPdfBtn.addEventListener("click", async () => {
   const cvEl = document.getElementById("cv");
   const clone = cvEl.cloneNode(true);
   clone.style.position = "static";
   document.body.appendChild(clone);
-  // === PDF IMAGE FIX (iOS + Desktop SAFE) ===
-const originalImg = cvEl.querySelector("#previewPhoto");
+ const originalImg = cvEl.querySelector("#previewPhoto");
 const clonedImg = clone.querySelector("#previewPhoto");
 
 if (originalImg && clonedImg) {
-  const img = new Image();
-  img.crossOrigin = "anonymous";
-  img.src = originalImg.src;
+  await new Promise(resolve => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = originalImg.src;
 
-  img.onload = () => {
-    const canvas = document.createElement("canvas");
-    canvas.width = img.naturalWidth;
-    canvas.height = img.naturalHeight;
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.naturalWidth || 300;
+      canvas.height = img.naturalHeight || 300;
 
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
 
-    clonedImg.src = canvas.toDataURL("image/png");
-  };
-}
-
-  // === PDF FIX: iOS SVG PHOTO BUG ===
-const img = clone.querySelector("#previewPhoto");
-if (img && img.src.endsWith(".svg")) {
+      clonedImg.src = canvas.toDataURL("image/png");
+      resolve();
+    };
+  });
 }
 
   clone.classList.add("pdf");
@@ -600,7 +597,6 @@ if (header) {
 
   /* ================= MOBİL UI TEMİZLE ================= */
   clone.querySelectorAll(".mobile-only").forEach(el => el.remove());
-  clone.querySelectorAll(".mobile-only").forEach(el => el.remove());
 
   /* ================= PDF ================= */
   html2pdf()
@@ -619,8 +615,11 @@ if (header) {
         orientation: "portrait"
       }
     })
-    .save();
-    clone.remove();
+    .save()
+.then(() => {
+  clone.remove();
+});
+
 });
 
 /* ================= INIT ================= */

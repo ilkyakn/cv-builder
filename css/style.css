@@ -172,16 +172,16 @@ body {
 
 #previewPhoto {
   width: 100px;
-  height: auto;          /* ⬅️ EN ÖNEMLİ SATIR */
-  aspect-ratio: 1 / 1;   /* ⬅️ kareyi korur */
+  height: 100px;
   object-fit: contain;
   display: block;
 }
 
-/* PDF (mobil html2canvas fix) */
 .preview.pdf #previewPhoto {
-  border-radius: 0 !important;
+  width: 100px !important;
+  height: 100px !important;
   object-fit: contain !important;
+  border-radius: 0 !important;
 }
 
 /* =========================
@@ -988,11 +988,22 @@ body.preview-open .preview {
   overflow: visible !important;
 }
 
-/* =========================
-   MOBILE PDF PHOTO FIX (IOS)
-   ========================= */
+/* === FINAL PDF & MOBILE PHOTO FIX === */
+
+/* Normal + PDF */
+#previewPhoto,
+.preview.pdf #previewPhoto {
+  width: 100px !important;
+  height: 100px !important;
+  object-fit: contain !important;
+  border-radius: 0 !important;
+}
+
+/* Print / html2pdf */
 @media print {
   #previewPhoto {
+    width: 100px !important;
+    height: 100px !important;
     object-fit: contain !important;
     border-radius: 0 !important;
   }
@@ -1000,38 +1011,5 @@ body.preview-open .preview {
   .header {
     overflow: visible !important;
     transform: none !important;
-  }
-}
-
-/* === PDF & iOS IMAGE FIX === */
-@media print {
-  #previewPhoto {
-    width: 100px !important;
-    height: auto !important;
-    max-height: 100px !important;
-    object-fit: contain !important;
-    border-radius: 0 !important;
-  }
-}
-
-/* PDF MODE */
-.preview.pdf #previewPhoto {
-  width: 100px !important;
-  height: auto !important;
-  max-height: 100px !important;
-  aspect-ratio: 1 / 1;
-  object-fit: contain !important;
-  border-radius: 0 !important;
-}
-
-/* PRINT / html2pdf */
-@media print {
-  #previewPhoto {
-    width: 100px !important;
-    height: auto !important;
-    max-height: 100px !important;
-    aspect-ratio: 1 / 1;
-    object-fit: contain !important;
-    border-radius: 0 !important;
   }
 }
