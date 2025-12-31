@@ -14,13 +14,6 @@
       Gerçek zamanlı önizleme, tek sayfa, profesyonel çıktı.
     </p>
   </div>
-
-  <div class="intro-right pdf-actions">
-    <button id="resetBtn" class="pdf-hide" data-i18n="reset">Sıfırla</button>
-    <button id="downloadPdfBtn" class="pdf-hide" data-i18n="download">
-      PDF olarak indir
-    </button>
-  </div>
 </div>
 <div class="container">
 
@@ -181,16 +174,19 @@
     </button>
 
     <div class="header">
-  <img id="previewPhoto" src="assets/default-avatar.svg" alt="Fotoğraf">
+      <img id="previewPhoto" src="assets/default-avatar.svg" alt="Fotoğraf">
 
-  <div class="info">
-    <h1 id="previewName">Ad Soyad</h1>
-    <h3 id="previewJob">Meslek</h3>
+    <div class="info">
+      <h1 id="previewName">Ad Soyad</h1>
+      <h3 id="previewJob">Meslek</h3>
+    </div>
   </div>
-</div>
 
-    <!-- İLETİŞİM ÖNİZLEME -->
+  <!-- CV SECTIONS (OKLAR SADECE BURAYI BİLİR) -->
+  <div class="cv-sections">
+
     <div id="contactSection" class="cv-section" data-section="contact">
+  
       <div class="cv-section-grid">
     <div class="cv-section-content">
     <p><strong><span data-i18n="phone">Telefon</span>:</strong> <span id="previewPhone">-</span></p>
@@ -282,6 +278,17 @@
     </div>
 
   </div>
+
+  </div> <!-- cv-sections -->
+
+  <!-- PREVIEW ACTIONS -->
+<div class="preview-actions pdf-hide">
+  <button id="resetBtn" data-i18n="reset">Sıfırla</button>
+  <button id="downloadPdfBtn" data-i18n="download">
+    PDF olarak indir
+  </button>
+</div>
+
   </div> <!-- preview -->
 </div> <!-- container -->
 

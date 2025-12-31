@@ -588,7 +588,7 @@ document.addEventListener("click", (e) => {
   const section = e.target.closest(".cv-section");
   if (!section) return;
 
-  const parent = section.parentElement;
+  const parent = section.closest(".cv-sections");
 
   if (upBtn) {
     const prev = section.previousElementSibling;

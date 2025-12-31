@@ -739,30 +739,47 @@ label.checkbox {
   }
 }
 
-/* ===== INTRO BAR ===== */
-.intro {
+/* =========================
+   PREVIEW ACTIONS (BOTTOM)
+   ========================= */
+
+.preview-actions {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px dashed #e5e7eb;
+
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
+  justify-content: center;
+  gap: 14px;
 }
 
-/* Sol başlık alanı */
-.intro-left {
-  max-width: 70%;
+/* Butonlar preview içinde daha sakin dursun */
+.preview-actions #downloadPdfBtn,
+.preview-actions #resetBtn {
+  margin: 0;
 }
 
-/* Sağ butonlar */
-.intro-right {
-  display: flex;
-  gap: 12px;
-  align-items: center;
+/* =========================
+   HERO FADE-IN ANIMATION
+   ========================= */
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Butonlar */
-.intro-right button {
-  padding: 10px 16px;
-  border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
+.intro h1,
+.intro p {
+  opacity: 0;
+  animation: heroFadeUp 0.7s ease-out forwards;
+}
+
+.intro p {
+  animation-delay: 0.15s;
 }
