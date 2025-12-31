@@ -488,6 +488,8 @@ function willExceedOnePage(sourceEl) {
 downloadPdfBtn.addEventListener("click", () => {
   const cvEl = document.getElementById("cv");
   const clone = cvEl.cloneNode(true);
+  clone.style.position = "static";
+  document.body.appendChild(clone);
   // === PDF IMAGE FIX (iOS + Desktop SAFE) ===
 const originalImg = cvEl.querySelector("#previewPhoto");
 const clonedImg = clone.querySelector("#previewPhoto");
@@ -604,6 +606,7 @@ if (header) {
       }
     })
     .save();
+    clone.remove();
 });
 
 /* ================= INIT ================= */

@@ -173,8 +173,6 @@ body {
 #previewPhoto {
   width: 100px;
   height: 100px;
-  object-fit: cover;
-  border-radius: 50%;
   display: block;
 }
 
@@ -1009,3 +1007,15 @@ body.preview-open .preview {
     transform: none !important;
   }
 }
+
+/* === PDF & iOS IMAGE FIX === */
+@media print {
+  #previewPhoto {
+    width: 100px !important;
+    height: auto !important;
+    max-height: 100px !important;
+    object-fit: contain !important;
+    border-radius: 0 !important;
+  }
+}
+
