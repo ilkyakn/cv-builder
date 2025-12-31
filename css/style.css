@@ -171,8 +171,8 @@ body {
 }
 
 #previewPhoto {
-  width: 12x;
-  height: 120pt;
+  width: 140px;
+  height: 140px;
   object-fit: contain;
   display: block;
 }
@@ -765,31 +765,6 @@ label.checkbox {
   margin: 0;
 }
 
-/* =========================
-   HERO FADE-IN ANIMATION
-   ========================= */
-
-@keyframes heroFadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.intro h1,
-.intro p {
-  opacity: 0;
-  animation: heroFadeUp 0.7s ease-out forwards;
-}
-
-.intro p {
-  animation-delay: 0.15s;
-}
-
 /* Kullanıcı yazdıysa ad/meslek her zaman siyah olsun */
 #previewName.is-filled,
 #previewJob.is-filled {
@@ -1013,3 +988,29 @@ body.preview-open .preview {
     transform: none !important;
   }
 }
+
+/* =========================
+   HERO FADE-IN ANIMATION
+   ========================= */
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.intro h1,
+.intro p {
+  opacity: 0;
+  animation: heroFadeUp 0.7s ease-out forwards;
+}
+
+.intro p {
+  animation-delay: 0.15s;
+}
+

@@ -179,11 +179,41 @@ photoInput.addEventListener("change", () => {
   const file = photoInput.files[0];
   if (!file) return;
 
+  const img = new Image();
   const reader = new FileReader();
-  reader.onload = () => {
-    previewPhoto.src = reader.result;
 
-    // 👇 BUTON METNİ DEĞİŞSİN
+  reader.onload = () => {
+    img.src = reader.result;
+  };
+
+  img.onload = () => {
+    const SIZE = 500; // 🔒 standart
+
+    const canvas = document.createElement("canvas");
+    canvas.width = SIZE;
+    canvas.height = SIZE;
+
+    const ctx = canvas.getContext("2d");
+
+    // kare kırpma
+    const minSide = Math.min(img.width, img.height);
+    const sx = (img.width - minSide) / 2;
+    const sy = (img.height - minSide) / 2;
+
+    ctx.drawImage(
+      img,
+      sx,
+      sy,
+      minSide,
+      minSide,
+      0,
+      0,
+      SIZE,
+      SIZE
+    );
+
+    previewPhoto.src = canvas.toDataURL("image/png");
+
     uploadPhotoLabel.textContent =
       languageSelect.value === "en"
         ? "Change Photo"
@@ -191,8 +221,10 @@ photoInput.addEventListener("change", () => {
 
     saveToStorage();
   };
+
   reader.readAsDataURL(file);
 });
+
 
 photoToggle.addEventListener("change", () => {
   if (photoToggle.checked) {
