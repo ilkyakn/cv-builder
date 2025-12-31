@@ -988,13 +988,6 @@ body.preview-open .preview {
   overflow: visible !important;
 }
 
-.preview.pdf #previewPhoto {
-  display: block;
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
-}
-
 /* =========================
    MOBILE PDF PHOTO FIX (IOS)
    ========================= */
