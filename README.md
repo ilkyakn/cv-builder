@@ -1,27 +1,21 @@
 # 📄 CV Builder – Live Preview Resume Generator
 
-A modern, browser-based **CV / Resume Builder** that allows users to fill out a form and see a **real-time CV preview** side by side.
+A modern, browser-based **CV / Resume Builder** that allows users to create a professional resume with a **real-time preview**.
 
-The project is designed to be:
-- Simple
-- Fast
-- No-backend
-- Fully client-side
-
-Users can generate and download their CV as a **PDF** with a clean and professional layout.
+Users fill in a form on one side of the screen and instantly see their CV updated on the other side. The project is fully client-side and does not require any backend or installation.
 
 ---
 
 ## ✨ Features
 
-- 📝 Live form input → instant CV preview
-- 🖼️ Profile photo upload with default fallback
-- 📊 CV completion indicator
+- 📝 Live form input with instant CV preview
+- 🖼️ Profile photo upload with default avatar support
+- 📊 CV completion progress indicator
 - 👁️ Section visibility toggles (About, Education, References, Photo)
-- 🌍 Multi-language structure (ready for expansion)
-- 📄 PDF export
-- 💻 Fully responsive layout
-- 🚀 Runs locally (no server required)
+- 🌍 Multi-language ready structure
+- 📄 Download CV as PDF
+- 💻 Responsive and modern layout
+- 🚀 Works locally (no server required)
 
 ---
 
@@ -52,44 +46,24 @@ Kodu kopyala
    git clone https://github.com/your-username/your-repo-name.git
 Open index.html in your browser
 
-Fill in the form and preview your CV instantly
+Fill in the form and preview your CV in real time
 
 Download your CV as a PDF
 
-No installation, no dependencies, no backend.
+No setup, no dependencies, no backend.
 
-🛠️ Technologies Used
-HTML5
-
-CSS3
-
-Vanilla JavaScript
-
-📌 Notes
-This project focuses on clarity and usability
-
-Designed as a foundation for further customization
-
-Ideal for personal CV creation or learning purposes
+🛠️ Technologies
+HTML5, CSS3, Vanilla JavaScript
 
 👤 Developer
 İlkay Emin Akan
-------------------------------------------------------------------------------------------------------------------
-📄 CV Builder – Canlı Önizlemeli Özgeçmiş Oluşturucu
-Bu proje, kullanıcıların bir form doldurarak özgeçmişlerini (CV) aynı anda canlı önizleme olarak görebildiği,
-tarayıcı tabanlı bir CV oluşturma uygulamasıdır.
 
-Proje:
+🇹🇷 Türkçe Açıklama
+CV Builder, kullanıcıların bir form doldurarak özgeçmişlerini anlık (canlı) önizleme ile oluşturabildiği,
+tarayıcı tabanlı bir CV / özgeçmiş hazırlama uygulamasıdır.
 
-Basit
-
-Hızlı
-
-Backend gerektirmeyen
-
-Tamamen istemci taraflı
-
-bir yapı ile geliştirilmiştir.
+Form alanlarına girilen bilgiler, aynı anda karşı taraftaki CV sayfasına yansır. Proje tamamen frontend yapıda
+olup herhangi bir sunucu veya kurulum gerektirmez.
 
 ✨ Özellikler
 📝 Form dolduruldukça anlık CV önizleme
@@ -103,27 +77,12 @@ bir yapı ile geliştirilmiştir.
 
 🌍 Çoklu dil yapısına uygun altyapı
 
-📄 PDF olarak indirme
+📄 CV’yi PDF olarak indirme
 
-💻 Responsive (mobil uyumlu) tasarım
+💻 Mobil uyumlu ve modern tasarım
 
-🚀 Sunucu gerektirmez, local çalışır
+🚀 Local çalışır, backend yok
 
-🧱 Proje Yapısı
-pgsql
-Kodu kopyala
-/cv-builder
-│
-├── index.html
-│
-├── css/
-│   └── style.css
-│
-├── js/
-│   └── app.js
-│
-└── assets/
-    └── default-avatar.svg
 ▶️ Kullanım
 Projeyi indir:
 
@@ -132,25 +91,14 @@ Kodu kopyala
 git clone https://github.com/kullanici-adi/repo-adi.git
 index.html dosyasını tarayıcıda aç
 
-Formu doldur, CV’yi anında önizle
+Formu doldur ve CV’yi anında önizle
 
 PDF olarak indir
 
-Kurulum yok, bağımlılık yok.
+Kurulum gerekmez.
 
 🛠️ Kullanılan Teknolojiler
-HTML5
-
-CSS3
-
-Vanilla JavaScript
-
-📌 Notlar
-Proje sade ve anlaşılır kullanım hedefiyle geliştirilmiştir
-
-Genişletilmeye ve özelleştirmeye uygundur
-
-Kişisel kullanım ve öğrenme amaçlı idealdir
+HTML5, CSS3, Vanilla JavaScript
 
 👤 Geliştirici
 İlkay Emin Akan
