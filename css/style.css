@@ -1,6 +1,10 @@
 /* =========================
    RESET & GENEL
    ========================= */
+   html {
+  scrollbar-gutter: stable;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -43,6 +47,7 @@ body {
   gap: 20px;
   align-items: flex-start;
   margin-top: 20px;
+  align-items: stretch;
 }
 
 /* =========================
@@ -158,6 +163,8 @@ body {
   min-height: 900px;
   line-height: 1.45;
   word-wrap: break-word;
+  /* FORM KADAR UZASIN */
+  min-height: 100%;
 }
 
 /* =========================
@@ -1013,4 +1020,252 @@ body.preview-open .preview {
 .intro p {
   animation-delay: 0.15s;
 }
+
+/* =========================
+   FORM KATMAN SİSTEMİ
+   ========================= */
+
+.form-main {
+  min-height: 900px; /* preview ile aynı hissi verir */
+}
+
+.form-extra {
+  display: none;
+  margin-top: 20px;
+}
+
+.extra-toggle {
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px;
+
+  background: #1e40af;
+  color: #ffffff;
+
+  border: none;
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.extra-toggle:hover {
+  background: #163f8f;
+}
+
+/* =========================
+   PREVIEW PROGRESS BAR
+   ========================= */
+
+.preview .progress-wrapper {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.preview .progress-bg {
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 6px;
+}
+
+.preview #progressBar {
+  background: #1e40af; /* sitenin mavisi */
+}
+
+.preview small {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  text-align: center;
+  color: #374151;
+}
+
+/* =========================
+   FORM HEADER (TITLE + ⚙️)
+   ========================= */
+
+.form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.settings-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #1e40af;
+}
+
+/* =========================
+   SETTINGS PANEL (MODAL)
+   ========================= */
+
+/* =========================
+   SETTINGS DRAWER (RIGHT)
+   ========================= */
+
+.settings-panel {
+  position: absolute;
+  top: 56px;      /* CV Bilgileri başlığı altı */
+  left: 16px;
+
+  z-index: 1000;
+
+  background: transparent;
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity 0.2s ease;
+}
+
+.settings-panel.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.settings-header button {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* =========================
+   MODERN SETTINGS PANEL
+   ========================= */
+
+.settings-card {
+  position: relative;
+
+  width: 360px;
+  max-width: 90vw;
+
+  background: #ffffff;
+  padding: 24px;
+
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+
+  transform: translateY(-12px);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.settings-panel.active .settings-card {
+  transform: translateY(0);
+}
+
+/* Başlık */
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 22px;
+}
+
+/* Grid yapı */
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+/* Tek alan */
+.settings-field {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Label */
+.settings-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+/* Select */
+.settings-field select {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 2px solid #dbeafe;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #f8fbff;
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.settings-field select:hover {
+  border-color: #2563eb;
+}
+
+.settings-field select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.18);
+}
+
+/* Kapat butonu */
+.settings-header button {
+  font-size: 18px;
+  color: #6b7280;
+}
+
+.settings-header button:hover {
+  color: #111827;
+}
+
+/* Mobil uyum */
+@media (max-width: 480px) {
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 769px) {
+  .settings-card {
+    left: 32px;
+  }
+}
+
+/* =========================
+   BACKGROUND BLUR (SETTINGS)
+   ========================= */
+
+   body.settings-open .form-main,
+body.settings-open .form-extra {
+  filter: blur(6px);
+  transition: filter 0.45s ease;
+}
+
+body.settings-open {
+  overflow: hidden;
+}
+
+/* =========================
+   FORM HEADER ACTIONS
+   ========================= */
+
+.form-header-actions {
+  display: flex;
+  gap: 8px;
+}
+
 

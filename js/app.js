@@ -654,6 +654,22 @@ if (header) {
 
 });
 
+/* ================= ALT FORM TOGGLE ================= */
+const toggleExtraFormBtn = document.getElementById("toggleExtraForm");
+const formExtra = document.querySelector(".form-extra");
+
+if (toggleExtraFormBtn && formExtra) {
+  toggleExtraFormBtn.addEventListener("click", () => {
+    const isOpen = formExtra.style.display === "block";
+
+    formExtra.style.display = isOpen ? "none" : "block";
+    toggleExtraFormBtn.textContent = isOpen
+      ? "Diğer bilgileri göster"
+      : "Diğer bilgileri gizle";
+  });
+}
+
+
 /* ================= INIT ================= */
 const savedLang = localStorage.getItem("cv-language");
 
@@ -662,7 +678,12 @@ if (savedLang) {
 }
 
 loadFromStorage();
+
 syncContactSection();
+syncSection(toggleAbout, aboutSection, aboutInput);
+syncSection(toggleEducation, educationSection, educationInput);
+syncSection(toggleReference, referenceSection, referenceInput);
+
 applyLanguage(languageSelect.value);
 updateLanguageLabel(languageSelect.value);
 updateProgress();
@@ -743,3 +764,77 @@ function updateHelpPosition() {
 
 // İlk yüklemede de kontrol
 window.addEventListener("load", updateHelpPosition);
+
+/* ================= SETTINGS PANEL ================= */
+
+const openSettingsBtn = document.getElementById("openSettingsBtn");
+const closeSettingsBtn = document.getElementById("closeSettingsBtn");
+const settingsPanel = document.getElementById("settingsPanel");
+
+/* ================= SETTINGS BLUR ================= */
+/* ================= SETTINGS PANEL (TOGGLE) ================= */
+
+if (openSettingsBtn && closeSettingsBtn && settingsPanel) {
+
+  openSettingsBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    const isOpen = settingsPanel.classList.contains("active");
+
+    if (isOpen) {
+      settingsPanel.classList.remove("active");
+      document.body.classList.remove("settings-open");
+    } else {
+      settingsPanel.classList.add("active");
+      document.body.classList.add("settings-open");
+    }
+  });
+
+  closeSettingsBtn.addEventListener("click", () => {
+    settingsPanel.classList.remove("active");
+    document.body.classList.remove("settings-open");
+  });
+
+}
+// Panel dışına tıklayınca kapat
+document.addEventListener("click", (e) => {
+
+  // Panel açık değilse hiçbir şey yapma
+  if (!settingsPanel.classList.contains("active")) return;
+
+  // Ayarlar panelinin kendisi
+  const panelCard = settingsPanel.querySelector(".settings-card");
+
+  // Eğer tıklanan yer panelin içi DEĞİLSE ve ayarlar butonu DEĞİLSE
+  if (
+    !panelCard.contains(e.target) &&
+    e.target !== openSettingsBtn
+  ) {
+    settingsPanel.classList.remove("active");
+    document.body.classList.remove("settings-open");
+  }
+});
+
+/* ================= FULLSCREEN ================= */
+
+const fullscreenBtn = document.getElementById("fullscreenBtn");
+
+if (fullscreenBtn) {
+  fullscreenBtn.addEventListener("click", () => {
+
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+
+  });
+}
+
+/* ESC ile çıkışı yakala */
+document.addEventListener("fullscreenchange", () => {
+  if (!document.fullscreenElement) {
+    // Tam ekrandan çıkıldı
+    // Şu an ekstra bir şey yapmamıza gerek yok
+  }
+});
